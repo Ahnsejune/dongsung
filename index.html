@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동성산업개발㈜ - 폐업·철거 전문가</title>
+  <meta name="description" content="전문적인 폐업·철거·원상복구 서비스. 희망리턴패키지까지 한 번에 해결하세요.">
+
+  <!-- 2025년 트렌드 폰트 -->
+  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* 코오롱건설 스타일 + 2025년 트렌드 컬러 */
+      --kolon-navy: #1e2c4a;
+      --kolon-blue: #0066cc;
+      --kolon-light-blue: #4a90e2;
+      --kolon-gray-50: #f8fafc;
+      --kolon-gray-100: #f1f5f9;
+      --kolon-gray-200: #e2e8f0;
+      --kolon-gray-300: #cbd5e1;
+      --kolon-gray-400: #94a3b8;
+      --kolon-gray-500: #64748b;
+      --kolon-gray-600: #475569;
+      --kolon-gray-700: #334155;
+      --kolon-gray-800: #1e293b;
+      --kolon-gray-900: #0f172a;
+
+      /* 그라데이션 */
+      --gradient-hero: linear-gradient(135deg, var(--kolon-navy) 0%, var(--kolon-blue) 100%);
+      --gradient-card: linear-gradient(135deg, var(--kolon-gray-50) 0%, rgba(255,255,255,0.8) 100%);
+      --gradient-button: linear-gradient(135deg, var(--kolon-blue) 0%, var(--kolon-light-blue) 100%);
+      --gradient-subtle: linear-gradient(135deg, var(--kolon-gray-100) 0%, var(--kolon-gray-50) 100%);
+
+      /* 그림자 - 2025년 트렌드 */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+      /* 애니메이션 */
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-med: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+      /* 레이아웃 */
+      --max-width: 1200px;
+      --border-radius: 16px;
+      --border-radius-lg: 24px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      background: var(--kolon-gray-50);
+      color: var(--kolon-gray-900);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 헤더 - 코오롱 스타일 */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(30, 44, 74, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all var(--transition-fast);
+    }
+
+    .header-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--kolon-blue);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .nav {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--kolon-blue);
+      transition: width var(--transition-fast);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .cta-button {
+      background: var(--gradient-button);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: var(--shadow-md);
+      transition: all var(--transition-fast);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left var(--transition-med);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* 히어로 섹션 - 코오롱 스타일 풀-와이드 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      background: var(--kolon-navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero-container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content {
+      color: white;
+    }
+
+    .hero-kicker {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--kolon-blue);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: white;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left var(--transition-med);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary {
+      background: white;
+      color: var(--forest-700);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .floating-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem;
+      color: var(--kolon-navy);
+      box-shadow: var(--shadow-2xl);
+      animation: float 6s ease-in-out infinite;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--kolon-navy);
+    }
+
+    .card-description {
+      font-size: 0.875rem;
+      color: var(--kolon-gray-600);
+      margin-bottom: 1rem;
+    }
+
+    .card-stats {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--kolon-gray-200);
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--kolon-blue);
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--kolon-gray-500);
+    }
+
+    /* 회사소개 섹션 */
+    .about {
+      padding: 8rem 0;
+      background: white;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .about-card {
+      background: var(--kolon-gray-50);
+      border: 1px solid var(--kolon-gray-200);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem;
+      text-align: center;
+      transition: all var(--transition-med);
+    }
+
+    .about-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--kolon-blue);
+      background: white;
+    }
+
+    .about-icon {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--kolon-navy);
+      margin-bottom: 1rem;
+    }
+
+    .about-description {
+      color: var(--kolon-gray-600);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+
+    /* 성과/신뢰 섹션 */
+    .achievements {
+      padding: 8rem 0;
+      background: var(--kolon-navy);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .achievements::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%),
+        linear-gradient(-45deg, transparent 48%, rgba(255,255,255,0.03) 49%, rgba(255,255,255,0.03) 51%, transparent 52%);
+      background-size: 20px 20px;
+      opacity: 0.3;
+    }
+
+    .achievements .section-header {
+      position: relative;
+      z-index: 2;
+    }
+
+    .achievements .section-kicker {
+      color: var(--kolon-blue);
+    }
+
+    .achievements .section-title {
+      color: white;
+    }
+
+    .achievements .section-description {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .achievement-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      transition: all var(--transition-med);
+    }
+
+    .achievement-card:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-8px) scale(1.05);
+      box-shadow: var(--shadow-2xl);
+    }
+
+    .achievement-number {
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: var(--kolon-blue);
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .achievement-label {
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+
+    .achievement-description {
+      font-size: 0.875rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* 서비스 섹션 - 코오롱 스타일 카드 */
+    .services {
+      padding: 8rem 0;
+      background: white;
+    }
+
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-kicker {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--kolon-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--kolon-navy);
+      margin-bottom: 1rem;
+    }
+
+    .section-description {
+      font-size: 1.125rem;
+      color: var(--kolon-gray-600);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .service-card {
+      background: white;
+      border: 1px solid var(--kolon-gray-200);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem;
+      transition: all var(--transition-med);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--kolon-blue);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--kolon-blue);
+    }
+
+    .service-card {
+      background: var(--kolon-gray-50);
+      border: 1px solid var(--kolon-gray-200);
+      border-radius: var(--border-radius-lg);
+      padding: 2.5rem;
+      transition: all var(--transition-med);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--kolon-blue);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      background: white;
+      border-color: var(--kolon-blue);
+    }
+
+    .service-icon {
+      width: 3rem;
+      height: 3rem;
+      background: var(--kolon-blue);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .service-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--kolon-navy);
+      margin-bottom: 1rem;
+    }
+
+    .service-description {
+      color: var(--kolon-gray-600);
+      line-height: 1.6;
+    }
+
+    /* 프로세스 섹션 - 미니멀 & 세련됨 */
+    .process {
+      padding: 8rem 0;
+      background: var(--kolon-gray-50);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 4rem;
+      height: 4rem;
+      background: var(--kolon-blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 auto 1.5rem;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .step-number:hover {
+      transform: scale(1.1);
+      background: var(--kolon-light-blue);
+      box-shadow: var(--shadow-xl);
+    }
+
+    .step-title {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--kolon-navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .step-description {
+      color: var(--kolon-gray-600);
+      font-size: 0.875rem;
+      transition: all var(--transition-fast);
+    }
+
+    /* 문의하기 폼 섹션 */
+    .contact-form-section {
+      padding: 8rem 0;
+      background: var(--kolon-gray-50);
+    }
+
+    .contact-form-container {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .contact-form {
+      background: white;
+      border: 1px solid var(--kolon-gray-200);
+      border-radius: var(--border-radius-lg);
+      padding: 3rem;
+      box-shadow: var(--shadow-md);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      color: var(--kolon-navy);
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .required {
+      color: var(--kolon-blue);
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      border: 1px solid var(--kolon-gray-300);
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all var(--transition-fast);
+      background: white;
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--kolon-blue);
+      box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    }
+
+    .form-select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23475569' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .file-upload-wrapper {
+      position: relative;
+    }
+
+    .form-file {
+      display: none;
+    }
+
+    .file-upload-label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.875rem 1rem;
+      border: 2px dashed var(--kolon-gray-300);
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      background: var(--kolon-gray-50);
+    }
+
+    .file-upload-label:hover {
+      border-color: var(--kolon-blue);
+      background: white;
+    }
+
+    .file-upload-icon {
+      font-size: 1.5rem;
+    }
+
+    .file-upload-text {
+      font-size: 0.95rem;
+      color: var(--kolon-gray-600);
+    }
+
+    .file-list {
+      margin-top: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: var(--kolon-gray-50);
+      border-radius: var(--border-radius);
+      font-size: 0.875rem;
+    }
+
+    .file-item-name {
+      color: var(--kolon-gray-700);
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-item-remove {
+      background: none;
+      border: none;
+      color: var(--kolon-gray-500);
+      cursor: pointer;
+      font-size: 1.25rem;
+      padding: 0 0.5rem;
+      transition: color var(--transition-fast);
+    }
+
+    .file-item-remove:hover {
+      color: #dc2626;
+    }
+
+    .form-hint {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--kolon-gray-500);
+    }
+
+    .form-actions {
+      margin-top: 2rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1.125rem 2rem;
+      background: var(--kolon-blue);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      font-size: 1.125rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left var(--transition-med);
+    }
+
+    .btn-submit:hover {
+      background: var(--kolon-light-blue);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .btn-submit:hover::before {
+      left: 100%;
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .contact-info-card {
+      background: white;
+      border: 1px solid var(--kolon-gray-200);
+      border-radius: var(--border-radius-lg);
+      padding: 2rem;
+      text-align: center;
+      transition: all var(--transition-med);
+    }
+
+    .contact-info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--kolon-blue);
+    }
+
+    .contact-info-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--kolon-navy);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-info-text {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--kolon-blue);
+      margin-bottom: 0.25rem;
+    }
+
+    .contact-info-sub {
+      font-size: 0.875rem;
+      color: var(--kolon-gray-600);
+    }
+
+    /* CTA 섹션 - 대담한 그라데이션 */
+    .cta {
+      padding: 8rem 0;
+      background: var(--kolon-navy);
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .cta-description {
+      font-size: 1.125rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      background: var(--kolon-blue);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.125rem;
+      box-shadow: var(--shadow-lg);
+      transition: all var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left var(--transition-med);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-xl);
+    }
+
+    /* 푸터 - 코오롱 스타일 */
+    .footer {
+      background: var(--kolon-navy);
+      color: var(--kolon-gray-300);
+      padding: 4rem 0 2rem;
+    }
+
+    .footer-content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--kolon-blue);
+      margin-bottom: 1rem;
+    }
+
+    .footer-info {
+      color: var(--kolon-gray-400);
+      margin-bottom: 2rem;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--kolon-gray-700);
+      padding-top: 2rem;
+      color: var(--kolon-gray-500);
+      font-size: 0.875rem;
+    }
+
+    /* 반응형 디자인 - 코오롱 스타일 */
+    @media (max-width: 768px) {
+      .header-container,
+      .container {
+        padding: 0 1rem;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        text-align: center;
+        padding: 0 1rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .services-grid,
+      .process-steps,
+      .about-grid,
+      .achievements-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .floating-card {
+        margin: 0 1rem;
+        padding: 1.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .contact-form-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .contact-form {
+        padding: 2rem 1.5rem;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    /* 애니메이션 - 더 세련된 효과 */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .slide-in-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide-in-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .slide-in-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide-in-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* 호버 효과 강화 */
+    .service-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+      transform: rotate(45deg);
+      transition: all 0.6s ease;
+      opacity: 0;
+    }
+
+    .service-card:hover::after {
+      animation: shimmer 0.6s ease;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <!-- 헤더 -->
+  <header class="header">
+    <div class="header-container">
+      <a href="#" class="logo">동성산업개발</a>
+      <nav class="nav">
+        <a href="#about" class="nav-link">회사소개</a>
+        <a href="#services" class="nav-link">서비스</a>
+        <a href="#process" class="nav-link">프로세스</a>
+        <a href="#contact" class="nav-link">문의하기</a>
+        <a href="#contact" class="cta-button">무료 상담</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 히어로 섹션 -->
+  <section class="hero">
+    <div class="hero-container">
+      <div class="hero-content slide-in-left">
+        <div class="hero-kicker">전문 폐업·철거 서비스</div>
+        <h1 class="hero-title">
+          신뢰로 만드는<br>
+          폐업·철거 전문가
+        </h1>
+        <p class="hero-description">
+          복잡한 절차, 예상 못한 비용, 까다로운 서류 준비까지.<br>
+          전문가가 한 번에 해결해드립니다.
+        </p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-primary">
+            <span>무료 상담 신청</span>
+            <span>→</span>
+          </a>
+          <a href="#process" class="btn btn-secondary">
+            <span>프로세스 보기</span>
+          </a>
+        </div>
+      </div>
+      <div class="hero-visual slide-in-right">
+        <div class="floating-card">
+          <div class="card-title">ONE-STOP 서비스</div>
+          <div class="card-description">
+            폐업 상담부터 철거 완료까지<br>
+            한 팀이 책임지고 해결합니다.
+          </div>
+          <div class="card-stats">
+            <div class="stat">
+              <div class="stat-value">7</div>
+              <div class="stat-label">단계 프로세스</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">24H</div>
+              <div class="stat-label">빠른 상담</div>
+            </div>
+            <div class="stat">
+              <div class="stat-value">A-Z</div>
+              <div class="stat-label">원스톱 해결</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 회사소개 섹션 -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-kicker">ABOUT US</div>
+        <h2 class="section-title">동성산업개발을 소개합니다</h2>
+        <p class="section-description">
+          20년 이상의 현장 경험으로 고객의 새로운 시작을 책임집니다.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-card fade-in">
+          <div class="about-icon">🏢</div>
+          <h3 class="about-title">전문성</h3>
+          <p class="about-description">
+            폐업, 철거, 원상복구 분야에서 20년 이상의 경험을 보유한 전문가 팀이
+            체계적인 프로세스로 완벽하게 처리합니다.
+          </p>
+        </div>
+
+        <div class="about-card fade-in">
+          <div class="about-icon">💼</div>
+          <h3 class="about-title">신뢰성</h3>
+          <p class="about-description">
+            투명한 견적과 계약으로 예상치 못한 추가 비용이 없으며,
+            약속한 일정을 정확하게 지킵니다.
+          </p>
+        </div>
+
+        <div class="about-card fade-in">
+          <div class="about-icon">⚡</div>
+          <h3 class="about-title">원스톱</h3>
+          <p class="about-description">
+            희망리턴패키지 지원사업 신청부터 최종 정산까지
+            모든 과정을 한 팀이 책임지고 해결합니다.
+          </p>
+        </div>
+
+        <div class="about-card fade-in">
+          <div class="about-icon">🎯</div>
+          <h3 class="about-title">맞춤형</h3>
+          <p class="about-description">
+            각 현장의 특성과 고객의 상황을 고려한
+            최적의 맞춤형 솔루션을 제공합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 성과/신뢰 섹션 -->
+  <section id="achievements" class="achievements">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-kicker">ACHIEVEMENTS</div>
+        <h2 class="section-title">숫자로 보는 동성산업개발</h2>
+        <p class="section-description">
+          고객의 신뢰와 만족이 만들어낸 확실한 실적입니다.
+        </p>
+      </div>
+
+      <div class="achievements-grid">
+        <div class="achievement-card fade-in">
+          <div class="achievement-number">20+</div>
+          <div class="achievement-label">년 경력</div>
+          <div class="achievement-description">풍부한 현장 경험</div>
+        </div>
+
+        <div class="achievement-card fade-in">
+          <div class="achievement-number">500+</div>
+          <div class="achievement-label">프로젝트</div>
+          <div class="achievement-description">성공적인 완료 건수</div>
+        </div>
+
+        <div class="achievement-card fade-in">
+          <div class="achievement-number">98%</div>
+          <div class="achievement-label">고객 만족도</div>
+          <div class="achievement-description">높은 재의뢰율</div>
+        </div>
+
+        <div class="achievement-card fade-in">
+          <div class="achievement-number">24H</div>
+          <div class="achievement-label">빠른 응대</div>
+          <div class="achievement-description">신속한 상담 서비스</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 서비스 섹션 -->
+  <section id="services" class="services">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-kicker">OUR SERVICES</div>
+        <h2 class="section-title">왜 전문가가 필요할까요?</h2>
+        <p class="section-description">
+          폐업은 단순한 공사가 아닙니다. 전문 지식과 경험이 필요한 복잡한 프로세스입니다.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <div class="service-icon">🏗️</div>
+          <h3 class="service-title">정확한 비용 산정</h3>
+          <p class="service-description">
+            건물 구조와 설비 상태를 정확히 파악하여 예상 못한 추가 비용 없이
+            정직한 견적을 제공합니다.
+          </p>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">📋</div>
+          <h3 class="service-title">복잡한 서류 대행</h3>
+          <p class="service-description">
+            희망리턴패키지 등 정부 지원사업에 필요한 서류를
+            정확하게 준비하고 제출까지 책임집니다.
+          </p>
+        </div>
+
+        <div class="service-card fade-in">
+          <div class="service-icon">⚡</div>
+          <h3 class="service-title">신속한 일정 관리</h3>
+          <p class="service-description">
+            임대인과의 협의, 관할 기관과의 소통을 효율적으로 관리하여
+            예정된 일정에 맞춰 완료합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로세스 섹션 -->
+  <section id="process" class="process">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-kicker">PROCESS</div>
+        <h2 class="section-title">7단계 프로페셔널 프로세스</h2>
+        <p class="section-description">
+          체계적인 7단계 프로세스로 폐업·철거를 완벽하게 해결합니다.
+        </p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step fade-in">
+          <div class="step-number">1</div>
+          <h3 class="step-title">무료 상담</h3>
+          <p class="step-description">현재 상황을 정확히 파악하고 최적의 해결책을 제시합니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">2</div>
+          <h3 class="step-title">현장 실사</h3>
+          <p class="step-description">직접 방문하여 정확한 견적과 일정을 산정합니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">3</div>
+          <h3 class="step-title">계약 체결</h3>
+          <p class="step-description">투명한 계약으로 명확한 권리와 의무를 정합니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">4</div>
+          <h3 class="step-title">서류 준비</h3>
+          <p class="step-description">지원사업 신청에 필요한 모든 서류를 준비합니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">5</div>
+          <h3 class="step-title">철거 시공</h3>
+          <p class="step-description">전문 팀이 안전하고 깔끔하게 철거를 완료합니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">6</div>
+          <h3 class="step-title">검수 완료</h3>
+          <p class="step-description">임대인과 함께 현장을 확인하고 최종 검수를 받습니다.</p>
+        </div>
+
+        <div class="process-step fade-in">
+          <div class="step-number">7</div>
+          <h3 class="step-title">정산 지원</h3>
+          <p class="step-description">정부 지원금 정산까지 완벽하게 도와드립니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 문의하기 폼 섹션 -->
+  <section id="contact" class="contact-form-section">
+    <div class="container">
+      <div class="section-header fade-in">
+        <div class="section-kicker">CONTACT US</div>
+        <h2 class="section-title">무료 상담 신청하기</h2>
+        <p class="section-description">
+          아래 정보를 입력해주시면 24시간 내에 전문 상담사가 연락드립니다.
+        </p>
+      </div>
+
+      <div class="contact-form-container fade-in">
+        <form id="contactForm" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name" class="form-label">이름 <span class="required">*</span></label>
+              <input type="text" id="name" name="name" class="form-input" placeholder="홍길동" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone" class="form-label">연락처 <span class="required">*</span></label>
+              <input type="tel" id="phone" name="phone" class="form-input" placeholder="010-1234-5678" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="storeName" class="form-label">점포명 <span class="required">*</span></label>
+              <input type="text" id="storeName" name="storeName" class="form-input" placeholder="예: 동성카페" required>
+            </div>
+
+            <div class="form-group">
+              <label for="location" class="form-label">위치 <span class="required">*</span></label>
+              <input type="text" id="location" name="location" class="form-input" placeholder="예: 경남 창원시 성산구" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="situation" class="form-label">현재 상황 <span class="required">*</span></label>
+            <select id="situation" name="situation" class="form-select" required>
+              <option value="">선택해주세요</option>
+              <option value="폐업 예정">폐업 예정</option>
+              <option value="폐업 완료">폐업 완료</option>
+              <option value="철거 필요">철거 필요</option>
+              <option value="원상복구 필요">원상복구 필요</option>
+              <option value="희망리턴 신청 예정">희망리턴 신청 예정</option>
+              <option value="기타">기타</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="deadline" class="form-label">희망 완료 시점</label>
+            <input type="date" id="deadline" name="deadline" class="form-input">
+          </div>
+
+          <!-- 자금 집행방식 추가 -->
+          <div class="form-group">
+            <label for="paymentMethod" class="form-label">자금 집행방식</label>
+            <select id="paymentMethod" name="paymentMethod" class="form-select">
+              <option value="">선택해주세요</option>
+              <option value="선금 100%">선금 100%</option>
+              <option value="잔금 100%">잔금 100%</option>
+              <option value="선금 / 잔금">선금 / 잔금</option>
+              <option value="선금 / 중도금 / 잔금">선금 / 중도금 / 잔금</option>
+              <option value="관계없음">관계없음</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="fileUpload" class="form-label">파일 첨부</label>
+            <div class="file-upload-wrapper">
+              <input type="file" id="fileUpload" name="fileUpload" class="form-file" accept="image/*,.pdf,.doc,.docx" multiple>
+              <label for="fileUpload" class="file-upload-label">
+                <span class="file-upload-icon">📎</span>
+                <span class="file-upload-text">파일 선택 (최대 5개)</span>
+              </label>
+              <div id="fileList" class="file-list"></div>
+            </div>
+            <small class="form-hint">현장 사진, 임대차 계약서 등을 첨부해주세요 (선택사항)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="memo" class="form-label">메모</label>
+            <textarea id="memo" name="memo" class="form-textarea" rows="5" placeholder="추가로 문의하실 내용이나 요청사항을 자유롭게 작성해주세요."></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">
+              <span>무료 상담 신청하기</span>
+              <span>→</span>
+            </button>
+          </div>
+        </form>
+
+        <div class="contact-info">
+          <div class="contact-info-card">
+            <div class="contact-info-icon">📞</div>
+            <h3 class="contact-info-title">전화 상담</h3>
+            <p class="contact-info-text">055-645-1776</p>
+            <p class="contact-info-sub">평일 09:00 - 18:00</p>
+          </div>
+
+          <div class="contact-info-card">
+            <div class="contact-info-icon">📍</div>
+            <h3 class="contact-info-title">오시는 길</h3>
+            <p class="contact-info-text">경남 창원시</p>
+            <p class="contact-info-sub">상담 후 방문 가능</p>
+          </div>
+
+          <div class="contact-info-card">
+            <div class="contact-info-icon">⏰</div>
+            <h3 class="contact-info-title">빠른 응대</h3>
+            <p class="contact-info-text">24시간 내</p>
+            <p class="contact-info-sub">전문 상담사 연락</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA 섹션 -->
+  <section id="cta" class="cta">
+    <div class="container">
+      <div class="cta-content fade-in">
+        <h2 class="cta-title">
+          지금 바로 시작하세요
+        </h2>
+        <p class="cta-description">
+          전문가와 함께라면 복잡한 폐업도 간단하게 해결됩니다.<br>
+          무료 상담부터 시작해보세요.
+        </p>
+        <a href="tel:055-645-1776" class="cta-button">
+          <span>055-645-1776</span>
+          <span>☎</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">동성산업개발</div>
+      <div class="footer-info">
+        경남 창원시 | 대표전화 055-645-1776<br>
+        폐업·철거·원상복구 전문 기업
+      </div>
+      <div class="footer-bottom">
+        © 2025 동성산업개발㈜. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 스크롤 애니메이션
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // 애니메이션 요소 관찰
+    document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 헤더 스크롤 효과
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      if (window.scrollY > 100) {
+        header.style.background = 'rgba(30, 44, 74, 0.98)';
+        header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+      } else {
+        header.style.background = 'rgba(30, 44, 74, 0.95)';
+        header.style.boxShadow = 'none';
+      }
+    });
+
+    // 부드러운 스크롤
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // 프로세스 단계 클릭 효과
+    document.querySelectorAll('.step-number').forEach((step, index) => {
+      step.addEventListener('click', function() {
+        // 모든 단계에서 활성 클래스 제거
+        document.querySelectorAll('.step-number').forEach(s => s.classList.remove('active'));
+        // 현재 단계에 활성 클래스 추가
+        this.classList.add('active');
+
+        // 해당 단계의 설명을 강조
+        const descriptions = document.querySelectorAll('.step-description');
+        descriptions.forEach((desc, i) => {
+          if (i === index) {
+            desc.style.color = 'var(--kolon-blue)';
+            desc.style.fontWeight = '600';
+          } else {
+            desc.style.color = 'var(--kolon-gray-600)';
+            desc.style.fontWeight = '400';
+          }
+        });
+      });
+    });
+
+    // 서비스 카드 호버 효과 강화
+    document.querySelectorAll('.service-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-8px) scale(1.02)';
+      });
+
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0) scale(1)';
+      });
+    });
+
+    // 파일 업로드 처리
+    const fileInput = document.getElementById('fileUpload');
+    const fileList = document.getElementById('fileList');
+    let selectedFiles = [];
+
+    fileInput.addEventListener('change', function(e) {
+      const files = Array.from(e.target.files);
+
+      // 최대 5개 파일 제한
+      if (selectedFiles.length + files.length > 5) {
+        alert('최대 5개의 파일만 첨부 가능합니다.');
+        return;
+      }
+
+      files.forEach(file => {
+        selectedFiles.push(file);
+        addFileToList(file);
+      });
+
+      // 입력 초기화
+      fileInput.value = '';
+    });
+
+    function addFileToList(file) {
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-item';
+      fileItem.innerHTML = `
+        <span class="file-item-name">${file.name}</span>
+        <button type="button" class="file-item-remove" onclick="removeFile('${file.name}')">×</button>
+      `;
+      fileList.appendChild(fileItem);
+    }
+
+    window.removeFile = function(fileName) {
+      selectedFiles = selectedFiles.filter(file => file.name !== fileName);
+
+      // UI 업데이트
+      const fileItems = fileList.querySelectorAll('.file-item');
+      fileItems.forEach(item => {
+        if (item.querySelector('.file-item-name').textContent === fileName) {
+          item.remove();
+        }
+      });
+    };
+
+    // 전화번호 자동 포맷팅
+    const phoneInput = document.getElementById('phone');
+    phoneInput.addEventListener('input', function(e) {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+
+      if (value.length <= 3) {
+        e.target.value = value;
+      } else if (value.length <= 7) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+      } else if (value.length <= 11) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
+      } else {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+      }
+    });
+
+    // 폼 제출 처리
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // 폼 데이터 수집
+      const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        storeName: document.getElementById('storeName').value,
+        location: document.getElementById('location').value,
+        situation: document.getElementById('situation').value,
+        paymentMethod: document.getElementById('paymentMethod').value, // 자금 집행방식
+        deadline: document.getElementById('deadline').value,
+        memo: document.getElementById('memo').value,
+        files: selectedFiles.map(f => f.name)
+      };
+
+      // 제출 버튼 비활성화
+      const submitBtn = contactForm.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>전송 중...</span>';
+
+      // 실제 환경에서는 서버로 전송
+      // 여기서는 시뮬레이션
+      setTimeout(() => {
+        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+        console.log('제출된 데이터:', formData);
+
+        // 폼 초기화
+        contactForm.reset();
+        selectedFiles = [];
+        fileList.innerHTML = '';
+
+        // 버튼 복원
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+      }, 1500);
+    });
+
+    // 성과 카드 숫자 애니메이션
+    function animateNumbers() {
+      const achievementCards = document.querySelectorAll('.achievement-number');
+
+      achievementCards.forEach(card => {
+        const text = card.textContent;
+        const hasPlus = text.includes('+');
+        const hasPercent = text.includes('%');
+        const hasH = text.includes('H');
+
+        let targetNumber;
+        if (hasH) {
+          targetNumber = 24;
+        } else {
+          targetNumber = parseInt(text.replace(/[^0-9]/g, ''));
+        }
+
+        if (!isNaN(targetNumber)) {
+          let currentNumber = 0;
+          const increment = targetNumber / 50;
+          const timer = setInterval(() => {
+            currentNumber += increment;
+            if (currentNumber >= targetNumber) {
+              currentNumber = targetNumber;
+              clearInterval(timer);
+            }
+
+            let displayText = Math.floor(currentNumber).toString();
+            if (hasPlus) displayText += '+';
+            if (hasPercent) displayText += '%';
+            if (hasH) displayText += 'H';
+
+            card.textContent = displayText;
+          }, 30);
+        }
+      });
+    }
+
+    // 성과 섹션이 보일 때 숫자 애니메이션 실행
+    const achievementsSection = document.getElementById('achievements');
+    if (achievementsSection) {
+      const achievementsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateNumbers();
+            achievementsObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      achievementsObserver.observe(achievementsSection);
+    }
+  </script>
+</body>
+</html>
