@@ -1907,103 +1907,45 @@
       }
     });
 
-  const fileInput = document.getElementById('fileUpload');
-  const fileList = document.getElementById('fileList');
-  let selectedFiles = [];
+    // 폼 제출 처리
+    const contactForm = document.getElementById('contactForm');
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
 
-  fileInput.addEventListener('change', function(e) {
-    const files = Array.from(e.target.files);
-    if (selectedFiles.length + files.length > 5) {
-      alert('최대 5개의 파일만 첨부 가능합니다.');
-      return;
-    }
-    files.forEach(file => {
-      selectedFiles.push(file);
-      addFileToList(file);
+      // 폼 데이터 수집
+      const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        storeName: document.getElementById('storeName').value,
+        location: document.getElementById('location').value,
+        situation: document.getElementById('situation').value,
+        paymentMethod: document.getElementById('paymentMethod').value, // 자금 집행방식
+        deadline: document.getElementById('deadline').value,
+        memo: document.getElementById('memo').value,
+        files: selectedFiles.map(f => f.name)
+      };
+
+      // 제출 버튼 비활성화
+      const submitBtn = contactForm.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>전송 중...</span>';
+
+      // 실제 환경에서는 서버로 전송
+      // 여기서는 시뮬레이션
+      setTimeout(() => {
+        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+        console.log('제출된 데이터:', formData);
+
+        // 폼 초기화
+        contactForm.reset();
+        selectedFiles = [];
+        fileList.innerHTML = '';
+
+        // 버튼 복원
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+      }, 1500);
     });
-    fileInput.value = '';
-  });
-
-  function addFileToList(file) {
-    const fileItem = document.createElement('div');
-    fileItem.className = 'file-item';
-    fileItem.innerHTML = `
-      <span class="file-item-name">${file.name}</span>
-      <button type="button" class="file-item-remove" onclick="removeFile('${file.name}')">×</button>
-    `;
-    fileList.appendChild(fileItem);
-  }
-
-  window.removeFile = function(fileName) {
-    selectedFiles = selectedFiles.filter(file => file.name !== fileName);
-    const fileItems = fileList.querySelectorAll('.file-item');
-    fileItems.forEach(item => {
-      if (item.querySelector('.file-item-name').textContent === fileName) {
-        item.remove();
-      }
-    });
-  };
-
-  const phoneInput = document.getElementById('phone');
-  phoneInput.addEventListener('input', function(e) {
-    let value = e.target.value.replace(/[^0-9]/g, '');
-    if (value.length <= 3) {
-      e.target.value = value;
-    } else if (value.length <= 7) {
-      e.target.value = value.slice(0, 3) + '-' + value.slice(3);
-    } else if (value.length <= 11) {
-      e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
-    } else {
-      e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
-    }
-  });
-
-  const contactForm = document.getElementById('contactForm');
-  contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-
-    const formData = {
-      name: document.getElementById('name').value,
-      phone: document.getElementById('phone').value,
-      storeName: document.getElementById('storeName').value,
-      location: document.getElementById('location').value,
-      situation: document.getElementById('situation').value,
-      paymentMethod: document.getElementById('paymentMethod').value,
-      deadline: document.getElementById('deadline').value,
-      memo: document.getElementById('memo').value,
-      files: selectedFiles.map(f => f.name)
-    };
-
-    const submitBtn = contactForm.querySelector('.btn-submit');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<span>전송 중...</span>';
-
-    try {
-      const response = await fetch('WEB_APP_URL_여기에', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-
-      // Apps Script에서 JSON 리턴하지 않고 no-cors로 쓸 경우 아래 두 줄 대신 그냥 성공 처리해도 됨
-      // const result = await response.json();
-      // if (result.result === 'success') { ... }
-
-      alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-      contactForm.reset();
-      selectedFiles = [];
-      fileList.innerHTML = '';
-    } catch (error) {
-      console.error(error);
-      alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-    }
-  });
 
     // 성과 카드 숫자 애니메이션
     function animateNumbers() {
