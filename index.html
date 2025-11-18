@@ -1907,45 +1907,52 @@
       }
     });
 
-    // 폼 제출 처리
-    const contactForm = document.getElementById('contactForm');
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
+const contactForm = document.getElementById('contactForm');
 
-      // 폼 데이터 수집
-      const formData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        storeName: document.getElementById('storeName').value,
-        location: document.getElementById('location').value,
-        situation: document.getElementById('situation').value,
-        paymentMethod: document.getElementById('paymentMethod').value, // 자금 집행방식
-        deadline: document.getElementById('deadline').value,
-        memo: document.getElementById('memo').value,
-        files: selectedFiles.map(f => f.name)
-      };
+contactForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
 
-      // 제출 버튼 비활성화
-      const submitBtn = contactForm.querySelector('.btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>전송 중...</span>';
+  // 폼 데이터 수집
+  const formData = {
+    name: document.getElementById('name').value,
+    phone: document.getElementById('phone').value,
+    storeName: document.getElementById('storeName').value,
+    location: document.getElementById('location').value,
+    situation: document.getElementById('situation').value,
+    paymentMethod: document.getElementById('paymentMethod').value,
+    deadline: document.getElementById('deadline').value,
+    memo: document.getElementById('memo').value,
+    files: selectedFiles.map(f => f.name),
+  };
 
-      // 실제 환경에서는 서버로 전송
-      // 여기서는 시뮬레이션
-      setTimeout(() => {
-        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-        console.log('제출된 데이터:', formData);
+  const submitBtn = contactForm.querySelector('.btn-submit');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span>전송 중...</span>';
 
-        // 폼 초기화
-        contactForm.reset();
-        selectedFiles = [];
-        fileList.innerHTML = '';
-
-        // 버튼 복원
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-      }, 1500);
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbxwHQ9dKs_vV43gFBFNSpBDfshgvw3y96zJ_KO_23Cz9hIO2yGURF7j33ZwOU7hsqqo/exec', {
+      method: 'POST',
+      mode: 'no-cors',              // CORS 에러 방지 용도
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
     });
+
+    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+
+    // 폼 초기화
+    contactForm.reset();
+    selectedFiles = [];
+    fileList.innerHTML = '';
+  } catch (error) {
+    console.error(error);
+    alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+  }
+});
 
     // 성과 카드 숫자 애니메이션
     function animateNumbers() {
