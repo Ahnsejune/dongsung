@@ -1947,7 +1947,6 @@ const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
-  // 폼 데이터 수집
 // 폼 제출 처리
 const contactForm = document.getElementById('contactForm');
 
@@ -1971,7 +1970,7 @@ contactForm.addEventListener('submit', async function (e) {
   submitBtn.innerHTML = '<span>전송 중...</span>';
 
   try {
-    await fetch('구글_웹앱_URL_여기에', {
+    await fetch('https://script.google.com/macros/s/AKfycbzru6xv0USr6czyX71nHXqsT2hJh894tYrFM1DUNlmX-PDXvYRlhoOgRsCtuvnb_LFZ/exec', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
