@@ -1849,25 +1849,60 @@
     // 파일 업로드 처리
     const fileInput = document.getElementById('fileUpload');
     const fileList = document.getElementById('fileList');
-    let selectedFiles = [];
+let selectedFiles = [];  // {name, type, data(base64)} 형태로 저장
 
-    fileInput.addEventListener('change', function(e) {
-      const files = Array.from(e.target.files);
+fileInput.addEventListener('change', function (e) {
+  const files = Array.from(e.target.files);
 
-      // 최대 5개 파일 제한
-      if (selectedFiles.length + files.length > 5) {
-        alert('최대 5개의 파일만 첨부 가능합니다.');
-        return;
-      }
+  if (selectedFiles.length + files.length > 5) {
+    alert('최대 5개의 파일만 첨부 가능합니다.');
+    return;
+  }
 
-      files.forEach(file => {
-        selectedFiles.push(file);
-        addFileToList(file);
+  files.forEach(file => {
+    const reader = new FileReader();
+
+    reader.onload = function (ev) {
+      // ev.target.result: data:...;base64,XXXX 형태
+      const base64 = ev.target.result.split(',')[1]; // 데이터 부분만 추출
+
+      selectedFiles.push({
+        name: file.name,
+        type: file.type,
+        data: base64
       });
 
-      // 입력 초기화
-      fileInput.value = '';
-    });
+      addFileToList(file.name);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  fileInput.value = '';
+});
+
+// 화면에 파일명 표시용
+function addFileToList(fileName) {
+  const fileItem = document.createElement('div');
+  fileItem.className = 'file-item';
+  fileItem.innerHTML = `
+    <span class="file-item-name">${fileName}</span>
+    <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
+  `;
+  fileList.appendChild(fileItem);
+}
+
+// 선택 파일 제거
+window.removeFile = function (fileName) {
+  selectedFiles = selectedFiles.filter(f => f.name !== fileName);
+  const fileItems = fileList.querySelectorAll('.file-item');
+  fileItems.forEach(item => {
+    if (item.querySelector('.file-item-name').textContent === fileName) {
+      item.remove();
+    }
+  });
+};
+
 
     function addFileToList(file) {
       const fileItem = document.createElement('div');
