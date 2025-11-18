@@ -1024,6 +1024,150 @@
       color: var(--kolon-gray-500);
       font-size: 0.875rem;
     }
+    .quick-icons-container {
+        position: fixed;
+        right: 30px;
+        bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        z-index: 1000;
+    }
+    
+    .quick-icons-container .icon-wrapper {
+        position: relative;
+        width: 60px;
+        height: 60px;
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon:hover::before {
+        opacity: 1;
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon:hover {
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon:active {
+        transform: translateY(-3px) scale(1.05);
+    }
+    
+    /* 인스타그램 */
+    .quick-icons-container .icon-wrapper .social-icon.instagram {
+        background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    }
+    
+    /* 페이스북 */
+    .quick-icons-container .icon-wrapper .social-icon.facebook {
+        background: linear-gradient(135deg, #1877f2, #0d5dbf);
+    }
+    
+    /* 카카오톡 */
+    .quick-icons-container .icon-wrapper .social-icon.kakao {
+        background: linear-gradient(135deg, #fee500, #ffd700);
+    }
+    
+    /* 아이콘 SVG */
+    .quick-icons-container .icon-wrapper .social-icon svg {
+        width: 28px;
+        height: 28px;
+        fill: white;
+        position: relative;
+        z-index: 1;
+        transition: transform 0.3s ease;
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon.kakao svg {
+        fill: #3c1e1e;
+    }
+    
+    .quick-icons-container .icon-wrapper .social-icon:hover svg {
+        transform: scale(1.15) rotate(5deg);
+    }
+    
+    /* 툴팁 */
+    .quick-icons-container .icon-wrapper .tooltip {
+        position: absolute;
+        right: 75px;
+        top: 50%;
+        transform: translateY(-50%) translateX(10px);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 10px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+    
+    .quick-icons-container .icon-wrapper .tooltip::after {
+        content: '';
+        position: absolute;
+        right: -6px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-left: 6px solid rgba(0, 0, 0, 0.9);
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+    }
+    
+    .quick-icons-container .icon-wrapper:hover .tooltip {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+    }
+    
+    /* 펄스 애니메이션 */
+    .quick-icons-container .icon-wrapper .pulse {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        animation: pulse 2s ease-out infinite;
+        pointer-events: none;
+    }
+    
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+        }
+        100% {
+            box-shadow: 0 0 0 20px rgba(255, 255, 255, 0);
+        }
+    }
 
     @media (max-width: 900px) {
       .logo img {max-height: 40px;}
@@ -1091,6 +1235,31 @@
 
       .nav {
         display: none;
+      }
+      .quick-icons-container {
+          right: 20px;
+          bottom: 20px;
+      }
+  
+      .quick-icons-container .icon-wrapper {
+          width: 50px;
+          height: 50px;
+      }
+  
+      .quick-icons-container .icon-wrapper .social-icon {
+          width: 50px;
+          height: 50px;
+          border-radius: 15px;
+      }
+  
+      .quick-icons-container .icon-wrapper .social-icon svg {
+          width: 24px;
+          height: 24px;
+      }
+  
+      .quick-icons-container .icon-wrapper .tooltip {
+          font-size: 12px;
+          padding: 6px 12px;
       }
     }
 
@@ -1539,7 +1708,40 @@
       </div>
     </div>
   </section>
+  <div class="quick-icons-container">
+      <!-- 인스타그램 -->
+      <div class="icon-wrapper">
+          <div class="social-icon instagram" onclick="openLink('instagram')">
+              <div class="pulse"></div>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+          </div>
+          <div class="tooltip">Instagram</div>
+      </div>
 
+      <!-- 페이스북 -->
+      <div class="icon-wrapper">
+          <div class="social-icon facebook" onclick="openLink('facebook')">
+              <div class="pulse"></div>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+          </div>
+          <div class="tooltip">Facebook</div>
+      </div>
+
+      <!-- 카카오톡 -->
+      <div class="icon-wrapper">
+          <div class="social-icon kakao" onclick="openLink('kakao')">
+              <div class="pulse"></div>
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 3c5.799 0 10.5 3.664 10.5 8.185 0 4.52-4.701 8.184-10.5 8.184a13.5 13.5 0 0 1-1.727-.11l-4.408 2.883c-.501.265-.678.236-.472-.413l.892-3.678c-2.88-1.46-4.785-3.99-4.785-6.866C1.5 6.665 6.201 3 12 3zm5.907 8.06l1.47-1.424a.472.472 0 0 0-.656-.681l-1.928 1.866V9.282a.472.472 0 0 0-.944 0v2.557a.471.471 0 0 0 0 .222V13.5a.472.472 0 0 0 .944 0v-1.363l.427-.413 1.428 2.033a.472.472 0 1 0 .773-.543l-1.514-2.155zm-2.958 1.924h-1.46V9.297a.472.472 0 0 0-.943 0v4.159c0 .26.21.472.471.472h1.932a.472.472 0 1 0 0-.944zm-5.857-1.092l.696-1.707.638 1.707H9.092zm2.523.488l.002-.016a.469.469 0 0 0-.127-.32l-1.046-2.8a.69.69 0 0 0-.627-.474.696.696 0 0 0-.653.447l-1.661 4.075a.472.472 0 0 0 .874.357l.33-.813h2.07l.299.8a.472.472 0 1 0 .884-.33l-.345-.926zM8.293 9.302a.472.472 0 0 0-.471-.472H4.577a.472.472 0 1 0 0 .944h1.16v3.736a.472.472 0 0 0 .944 0V9.774h1.14c.261 0 .472-.212.472-.472z"/>
+              </svg>
+          </div>
+          <div class="tooltip">카카오 오픈톡</div>
+      </div>
+  </div>
   <!-- 푸터 -->
   <footer class="footer">
     <div class="footer-content">
@@ -1786,6 +1988,38 @@
 
       achievementsObserver.observe(achievementsSection);
     }
+        function openLink(platform) {
+            // 실제 링크로 변경하세요
+            const links = {
+                instagram: 'https://www.instagram.com/dongsung_industrial_developmen/',
+                facebook: 'https://www.facebook.com/groups/1885071628746747',
+                kakao: 'https://open.kakao.com/o/sB9Dav2h'
+            };
+
+            // 새 탭에서 링크 열기
+            window.open(links[platform], '_blank');
+
+            // 클릭 효과
+            const icon = event.currentTarget;
+            icon.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                icon.style.transform = '';
+            }, 150);
+        }
+
+        // 아이콘에 순차적으로 등장 애니메이션 추가
+        document.addEventListener('DOMContentLoaded', () => {
+            const icons = document.querySelectorAll('.icon-wrapper');
+            icons.forEach((icon, index) => {
+                icon.style.opacity = '0';
+                icon.style.transform = 'translateX(50px)';
+                setTimeout(() => {
+                    icon.style.transition = 'all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                    icon.style.opacity = '1';
+                    icon.style.transform = 'translateX(0)';
+                }, 100 * (index + 1));
+            });
+        });
   </script>
 </body>
 </html>
