@@ -1948,6 +1948,12 @@ contactForm.addEventListener('submit', async function (e) {
   e.preventDefault();
 
   // 폼 데이터 수집
+// 폼 제출 처리
+const contactForm = document.getElementById('contactForm');
+
+contactForm.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
   const formData = {
     name: document.getElementById('name').value,
     phone: document.getElementById('phone').value,
@@ -1957,8 +1963,37 @@ contactForm.addEventListener('submit', async function (e) {
     paymentMethod: document.getElementById('paymentMethod').value,
     deadline: document.getElementById('deadline').value,
     memo: document.getElementById('memo').value,
-    files: selectedFiles.map(f => f.name),
+    files: selectedFiles      // ★ 전체 정보 전송
   };
+
+  const submitBtn = contactForm.querySelector('.btn-submit');
+  submitBtn.disabled = true;
+  submitBtn.innerHTML = '<span>전송 중...</span>';
+
+  try {
+    await fetch('구글_웹앱_URL_여기에', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+
+    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+
+    contactForm.reset();
+    selectedFiles = [];
+    fileList.innerHTML = '';
+  } catch (error) {
+    console.error(error);
+    alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+  }
+});
+
 
   const submitBtn = contactForm.querySelector('.btn-submit');
   submitBtn.disabled = true;
