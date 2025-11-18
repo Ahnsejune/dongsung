@@ -1849,75 +1849,52 @@
     // 파일 업로드 처리
     const fileInput = document.getElementById('fileUpload');
     const fileList = document.getElementById('fileList');
-let selectedFiles = [];  // {name, type, data(base64)} 형태로 저장
+    let selectedFiles = [];  // {name, type, data(base64)} 형태로 저장
 
-fileInput.addEventListener('change', function (e) {
-  const files = Array.from(e.target.files);
+    fileInput.addEventListener('change', function (e) {
+      const files = Array.from(e.target.files);
 
-  if (selectedFiles.length + files.length > 5) {
-    alert('최대 5개의 파일만 첨부 가능합니다.');
-    return;
-  }
+      if (selectedFiles.length + files.length > 5) {
+        alert('최대 5개의 파일만 첨부 가능합니다.');
+        return;
+      }
 
-  files.forEach(file => {
-    const reader = new FileReader();
+      files.forEach(file => {
+        const reader = new FileReader();
 
-    reader.onload = function (ev) {
-      // ev.target.result: data:...;base64,XXXX 형태
-      const base64 = ev.target.result.split(',')[1]; // 데이터 부분만 추출
+        reader.onload = function (ev) {
+          // ev.target.result: data:...;base64,XXXX 형태
+          const base64 = ev.target.result.split(',')[1]; // 데이터 부분만 추출
 
-      selectedFiles.push({
-        name: file.name,
-        type: file.type,
-        data: base64
+          selectedFiles.push({
+            name: file.name,
+            type: file.type,
+            data: base64
+          });
+
+          addFileToList(file.name);
+        };
+
+        reader.readAsDataURL(file);
       });
 
-      addFileToList(file.name);
-    };
+      fileInput.value = '';
+    });
 
-    reader.readAsDataURL(file);
-  });
-
-  fileInput.value = '';
-});
-
-// 화면에 파일명 표시용
-function addFileToList(fileName) {
-  const fileItem = document.createElement('div');
-  fileItem.className = 'file-item';
-  fileItem.innerHTML = `
-    <span class="file-item-name">${fileName}</span>
-    <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
-  `;
-  fileList.appendChild(fileItem);
-}
-
-// 선택 파일 제거
-window.removeFile = function (fileName) {
-  selectedFiles = selectedFiles.filter(f => f.name !== fileName);
-  const fileItems = fileList.querySelectorAll('.file-item');
-  fileItems.forEach(item => {
-    if (item.querySelector('.file-item-name').textContent === fileName) {
-      item.remove();
-    }
-  });
-};
-
-
-    function addFileToList(file) {
+    // 화면에 파일명 표시용
+    function addFileToList(fileName) {
       const fileItem = document.createElement('div');
       fileItem.className = 'file-item';
       fileItem.innerHTML = `
-        <span class="file-item-name">${file.name}</span>
-        <button type="button" class="file-item-remove" onclick="removeFile('${file.name}')">×</button>
+        <span class="file-item-name">${fileName}</span>
+        <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
       `;
       fileList.appendChild(fileItem);
     }
 
-    window.removeFile = function(fileName) {
-      selectedFiles = selectedFiles.filter(file => file.name !== fileName);
-
-      // UI 업데이트
+    // 선택 파일 제거
+    window.removeFile = function (fileName) {
+      selectedFiles = selectedFiles.filter(f => f.name !== fileName);
       const fileItems = fileList.querySelectorAll('.file-item');
       fileItems.forEach(item => {
         if (item.querySelector('.file-item-name').textContent === fileName) {
@@ -1942,86 +1919,52 @@ window.removeFile = function (fileName) {
       }
     });
 
-const contactForm = document.getElementById('contactForm');
+    // 폼 제출 처리
+    const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', async function (e) {
-  e.preventDefault();
+    contactForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
 
-// 폼 제출 처리
-const contactForm = document.getElementById('contactForm');
+      const formData = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        storeName: document.getElementById('storeName').value,
+        location: document.getElementById('location').value,
+        situation: document.getElementById('situation').value,
+        paymentMethod: document.getElementById('paymentMethod').value,
+        deadline: document.getElementById('deadline').value,
+        memo: document.getElementById('memo').value,
+        files: selectedFiles      // ★ 첨부파일 전체 정보 전송
+      };
 
-contactForm.addEventListener('submit', async function (e) {
-  e.preventDefault();
+      const submitBtn = contactForm.querySelector('.btn-submit');
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span>전송 중...</span>';
 
-  const formData = {
-    name: document.getElementById('name').value,
-    phone: document.getElementById('phone').value,
-    storeName: document.getElementById('storeName').value,
-    location: document.getElementById('location').value,
-    situation: document.getElementById('situation').value,
-    paymentMethod: document.getElementById('paymentMethod').value,
-    deadline: document.getElementById('deadline').value,
-    memo: document.getElementById('memo').value,
-    files: selectedFiles      // ★ 전체 정보 전송
-  };
+      try {
+        await fetch('여기에_최종_구글_웹앱_URL_하나만_넣기', {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        });
 
-  const submitBtn = contactForm.querySelector('.btn-submit');
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span>전송 중...</span>';
+        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
 
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbzru6xv0USr6czyX71nHXqsT2hJh894tYrFM1DUNlmX-PDXvYRlhoOgRsCtuvnb_LFZ/exec', {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
+        contactForm.reset();
+        selectedFiles = [];
+        fileList.innerHTML = '';
+      } catch (error) {
+        console.error(error);
+        alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+      }
     });
 
-    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-    contactForm.reset();
-    selectedFiles = [];
-    fileList.innerHTML = '';
-  } catch (error) {
-    console.error(error);
-    alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-  }
-});
-
-
-  const submitBtn = contactForm.querySelector('.btn-submit');
-  submitBtn.disabled = true;
-  submitBtn.innerHTML = '<span>전송 중...</span>';
-
-  try {
-    await fetch('https://script.google.com/macros/s/AKfycbxwHQ9dKs_vV43gFBFNSpBDfshgvw3y96zJ_KO_23Cz9hIO2yGURF7j33ZwOU7hsqqo/exec', {
-      method: 'POST',
-      mode: 'no-cors',              // CORS 에러 방지 용도
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-
-    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-    // 폼 초기화
-    contactForm.reset();
-    selectedFiles = [];
-    fileList.innerHTML = '';
-  } catch (error) {
-    console.error(error);
-    alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-  }
-});
 
     // 성과 카드 숫자 애니메이션
     function animateNumbers() {
