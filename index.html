@@ -1853,119 +1853,67 @@
       });
     });
 
-    // 파일 업로드 처리
-    const fileInput = document.getElementById('fileUpload');
-    const fileList = document.getElementById('fileList');
-    let selectedFiles = [];  // {name, type, data(base64)} 형태로 저장
-
-    fileInput.addEventListener('change', function (e) {
-      const files = Array.from(e.target.files);
-
-      if (selectedFiles.length + files.length > 5) {
-        alert('최대 5개의 파일만 첨부 가능합니다.');
-        return;
-      }
-
-      files.forEach(file => {
-        const reader = new FileReader();
-
-        reader.onload = function (ev) {
-          // ev.target.result: data:...;base64,XXXX 형태
-          const base64 = ev.target.result.split(',')[1]; // 데이터 부분만 추출
-
-          selectedFiles.push({
-            name: file.name,
-            type: file.type,
-            data: base64
-          });
-
-          addFileToList(file.name);
-        };
-
-        reader.readAsDataURL(file);
-      });
-
-      fileInput.value = '';
-    });
-
-    // 화면에 파일명 표시용
-    function addFileToList(fileName) {
-      const fileItem = document.createElement('div');
-      fileItem.className = 'file-item';
-      fileItem.innerHTML = `
-        <span class="file-item-name">${fileName}</span>
-        <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
-      `;
-      fileList.appendChild(fileItem);
-    }
-
-    // 선택 파일 제거
-    window.removeFile = function (fileName) {
-      selectedFiles = selectedFiles.filter(f => f.name !== fileName);
-      const fileItems = fileList.querySelectorAll('.file-item');
-      fileItems.forEach(item => {
-        if (item.querySelector('.file-item-name').textContent === fileName) {
-          item.remove();
-        }
-      });
-    };
-
-    // 전화번호 자동 포맷팅
-    const phoneInput = document.getElementById('phone');
-    phoneInput.addEventListener('input', function(e) {
-      let value = e.target.value.replace(/[^0-9]/g, '');
-
-      if (value.length <= 3) {
-        e.target.value = value;
-      } else if (value.length <= 7) {
-        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
-      } else if (value.length <= 11) {
-        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
-      } else {
-        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
-      }
-    });
-
-    // 폼 제출 처리
-let selectedFiles = [];
+// 파일 업로드 + 폼 제출 처리
 const fileInput = document.getElementById('fileUpload');
 const fileList = document.getElementById('fileList');
 const contactForm = document.getElementById('contactForm');
+let selectedFiles = [];  // { name, type, data } 형태
 
+// 파일 선택 시
 if (fileInput) {
-  fileInput.addEventListener('change', function () {
-    const files = Array.from(fileInput.files).slice(0, 5);
-    selectedFiles = [];
-    if (!files.length) {
-      fileList.innerHTML = '';
+  fileInput.addEventListener('change', function (e) {
+    const files = Array.from(e.target.files);
+
+    if (selectedFiles.length + files.length > 5) {
+      alert('최대 5개의 파일만 첨부 가능합니다.');
       return;
     }
 
-    let pending = files.length;
-
-    files.forEach(function (file) {
+    files.forEach(file => {
       const reader = new FileReader();
-      reader.onload = function (e) {
+
+      reader.onload = function (ev) {
+        // 전체 dataURL 그대로 서버로 보내도 되고(서버에서 , 기준 분리)
         selectedFiles.push({
           name: file.name,
           type: file.type,
-          data: e.target.result
+          data: ev.target.result
         });
 
-        pending--;
-        if (pending === 0) {
-          fileList.innerHTML = selectedFiles
-            .map(function (f) {
-              return '<div class="file-item">' + f.name + '</div>';
-            })
-            .join('');
-        }
+        addFileToList(file.name);
       };
+
       reader.readAsDataURL(file);
     });
+
+    // 같은 파일 다시 선택 가능하게 초기화
+    fileInput.value = '';
   });
 }
 
+// 화면에 파일명 추가
+function addFileToList(fileName) {
+  const fileItem = document.createElement('div');
+  fileItem.className = 'file-item';
+  fileItem.innerHTML = `
+    <span class="file-item-name">${fileName}</span>
+    <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
+  `;
+  fileList.appendChild(fileItem);
+}
+
+// 파일 제거
+window.removeFile = function (fileName) {
+  selectedFiles = selectedFiles.filter(f => f.name !== fileName);
+  const fileItems = fileList.querySelectorAll('.file-item');
+  fileItems.forEach(item => {
+    if (item.querySelector('.file-item-name').textContent === fileName) {
+      item.remove();
+    }
+  });
+};
+
+// 폼 제출
 if (contactForm) {
   contactForm.addEventListener('submit', async function (e) {
     e.preventDefault();
@@ -2010,6 +1958,7 @@ if (contactForm) {
     }
   });
 }
+
 
 
     // 성과 카드 숫자 애니메이션
