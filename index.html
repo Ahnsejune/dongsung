@@ -1775,7 +1775,6 @@
   </footer>
 
   <script>
-  // 스크롤 애니메이션
   const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
@@ -1793,7 +1792,6 @@
     observer.observe(el);
   });
 
-  // 헤더 스크롤 효과
   window.addEventListener('scroll', () => {
     const header = document.querySelector('.header');
     if (!header) return;
@@ -1806,7 +1804,6 @@
     }
   });
 
-  // 부드러운 스크롤
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
       const href = this.getAttribute('href');
@@ -1822,7 +1819,6 @@
     });
   });
 
-  // 프로세스 단계 클릭 효과
   document.querySelectorAll('.step-number').forEach((step, index) => {
     step.addEventListener('click', function () {
       document.querySelectorAll('.step-number').forEach(s => s.classList.remove('active'));
@@ -1841,7 +1837,6 @@
     });
   });
 
-  // 서비스 카드 호버 효과
   document.querySelectorAll('.service-card').forEach(card => {
     card.addEventListener('mouseenter', function () {
       this.style.transform = 'translateY(-8px) scale(1.02)';
@@ -1852,7 +1847,6 @@
     });
   });
 
-  // 전화번호 자동 포맷팅
   const phoneInput = document.getElementById('phone');
   if (phoneInput) {
     phoneInput.addEventListener('input', function (e) {
@@ -1870,120 +1864,79 @@
     });
   }
 
-  // ===========================
-  // 파일 업로드 + 폼 제출 처리
-  // ===========================
   const fileInput = document.getElementById('fileUpload');
   const fileList = document.getElementById('fileList');
   const contactForm = document.getElementById('contactForm');
-  let selectedFiles = []; // { name, type, data } 형태 (dataURL)
 
-  // 파일 선택
   if (fileInput && fileList) {
-    fileInput.addEventListener('change', function (e) {
-      const files = Array.from(e.target.files);
-
-      if (selectedFiles.length + files.length > 5) {
+    fileInput.addEventListener('change', function () {
+      const files = Array.from(fileInput.files);
+      if (files.length > 5) {
         alert('최대 5개의 파일만 첨부 가능합니다.');
+        fileInput.value = '';
+        fileList.innerHTML = '';
         return;
       }
-
+      fileList.innerHTML = '';
       files.forEach(file => {
-        const reader = new FileReader();
-
-        reader.onload = function (ev) {
-          selectedFiles.push({
-            name: file.name,
-            type: file.type,
-            data: ev.target.result // data:...;base64,XXXX
-          });
-
-          addFileToList(file.name);
-        };
-
-        reader.readAsDataURL(file);
+        const item = document.createElement('div');
+        item.className = 'file-item';
+        item.innerHTML = `
+          <span class="file-item-name">${file.name}</span>
+          <button type="button" class="file-item-remove" data-name="${file.name}">×</button>
+        `;
+        fileList.appendChild(item);
       });
+    });
 
-      // 같은 파일 다시 선택 가능하게 초기화
-      fileInput.value = '';
+    fileList.addEventListener('click', function (e) {
+      if (!e.target.classList.contains('file-item-remove')) return;
+      const name = e.target.getAttribute('data-name');
+      const dt = new DataTransfer();
+      Array.from(fileInput.files).forEach(f => {
+        if (f.name !== name) dt.items.add(f);
+      });
+      fileInput.files = dt.files;
+      e.target.parentElement.remove();
     });
   }
 
-  // 파일명 화면 표시
-  function addFileToList(fileName) {
-    if (!fileList) return;
-    const fileItem = document.createElement('div');
-    fileItem.className = 'file-item';
-    fileItem.innerHTML = `
-      <span class="file-item-name">${fileName}</span>
-      <button type="button" class="file-item-remove" onclick="removeFile('${fileName}')">×</button>
-    `;
-    fileList.appendChild(fileItem);
-  }
-
-  // 선택 파일 제거
-  window.removeFile = function (fileName) {
-    selectedFiles = selectedFiles.filter(f => f.name !== fileName);
-    if (!fileList) return;
-    const fileItems = fileList.querySelectorAll('.file-item');
-    fileItems.forEach(item => {
-      const nameEl = item.querySelector('.file-item-name');
-      if (nameEl && nameEl.textContent === fileName) {
-        item.remove();
-      }
-    });
-  };
-
-  // 폼 제출
   if (contactForm) {
     contactForm.addEventListener('submit', async function (e) {
       e.preventDefault();
 
-      const formData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        storeName: document.getElementById('storeName').value,
-        location: document.getElementById('location').value,
-        situation: document.getElementById('situation').value,
-        paymentMethod: document.getElementById('paymentMethod').value,
-        deadline: document.getElementById('deadline').value,
-        memo: document.getElementById('memo').value,
-        files: selectedFiles
-      };
-
       const submitBtn = contactForm.querySelector('.btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>전송 중...</span>';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>전송 중...</span>';
+      }
 
       try {
-        // ⚠️ 여기 URL 본인 웹앱 /exec 주소로 교체
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbw9gtmn5m_eLuLw7bHPh7abrW_FtRt-8NjxaaQTk9BfP9-DltZASV37gpgyMz7FMMbv/exec';
+        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxOdgP0BNQNrqedK3HsIkHMaNum1x-buYeamBBjZ0_386YxtU2iyxRlMBbmyZxNYuvh/exec';
+        const formDataToSend = new FormData(contactForm);
 
-        // CORS 프리플라이트 피하기 위해 no-cors + 헤더 제거
         await fetch(WEBAPP_URL, {
           method: 'POST',
           mode: 'no-cors',
-          body: JSON.stringify(formData)
+          body: formDataToSend
         });
 
-        // no-cors 모드에서는 응답을 읽을 수 없지만,
-        // fetch가 여기까지 오면 "요청은 정상 발사"됐다고 보고 처리
         alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
 
         contactForm.reset();
-        selectedFiles = [];
         if (fileList) fileList.innerHTML = '';
       } catch (error) {
         console.error('FETCH ERROR:', error);
         alert('전송 중 오류가 발생했습니다.\n\n' + (error && error.message ? error.message : error));
       } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+        }
       }
     });
   }
 
-  // 성과 카드 숫자 애니메이션
   function animateNumbers() {
     const achievementCards = document.querySelectorAll('.achievement-number');
 
@@ -2035,7 +1988,6 @@
     achievementsObserver.observe(achievementsSection);
   }
 
-  // 외부 링크 열기
   function openLink(platform) {
     const links = {
       instagram: 'https://www.instagram.com/dongsung_industrial_developmen/',
@@ -2048,15 +2000,17 @@
 
     window.open(url, '_blank');
 
-    const icon = event.currentTarget;
-    icon.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      icon.style.transform = '';
-    }, 150);
+    const evt = window.event;
+    if (evt && evt.currentTarget) {
+      const icon = evt.currentTarget;
+      icon.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        icon.style.transform = '';
+      }, 150);
+    }
   }
   window.openLink = openLink;
 
-  // 아이콘 등장 애니메이션
   document.addEventListener('DOMContentLoaded', () => {
     const icons = document.querySelectorAll('.icon-wrapper');
     icons.forEach((icon, index) => {
