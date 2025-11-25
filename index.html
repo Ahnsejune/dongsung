@@ -1586,7 +1586,7 @@
   </section>
 
   <!-- 문의하기 폼 섹션 -->
-  <section id="contact" class="contact-form-section">
+<section id="contact" class="contact-form-section">
     <div class="container">
       <div class="section-header fade-in">
         <div class="section-kicker">CONTACT US</div>
@@ -1600,13 +1600,14 @@
         <form
           id="contactForm"
           class="contact-form"
-          enctype="multipart/form-data"
           method="POST"
           action="https://script.google.com/macros/s/AKfycbygznFmdaAz_k5EykTGOIeaSRZ7GIEDIlwOWSnppbfZfoMN8eGf8FN2BmzXeVvyPjV6/exec"
           target="hidden_iframe"
-          onsubmit="onFormSubmit()"
         >
           <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="onIframeLoad()"></iframe>
+          
+          <input type="hidden" id="fileData" name="fileData">
+
           <div class="form-row">
             <div class="form-group">
               <label for="name" class="form-label">이름 <span class="required">*</span></label>
@@ -1649,7 +1650,6 @@
             <input type="date" id="deadline" name="deadline" class="form-input">
           </div>
 
-          <!-- 자금 집행방식 추가 -->
           <div class="form-group">
             <label for="paymentMethod" class="form-label">자금 집행방식</label>
             <select id="paymentMethod" name="paymentMethod" class="form-select">
@@ -1665,7 +1665,7 @@
           <div class="form-group">
             <label for="fileUpload" class="form-label">파일 첨부</label>
             <div class="file-upload-wrapper">
-              <input type="file" id="fileUpload" name="fileUpload" class="form-file" accept="image/*,.pdf,.doc,.docx" multiple>
+              <input type="file" id="fileUpload" class="form-file" accept="image/*,.pdf,.doc,.docx" multiple>
               <label for="fileUpload" class="file-upload-label">
                 <span class="file-upload-icon">📎</span>
                 <span class="file-upload-text">파일 선택 (최대 5개)</span>
@@ -1681,7 +1681,7 @@
           </div>
 
           <div class="form-actions">
-            <button type="submit" class="btn-submit">
+            <button type="button" class="btn-submit" onclick="handleSubmitWithFiles()">
               <span>무료 상담 신청하기</span>
               <span>→</span>
             </button>
@@ -1693,19 +1693,14 @@
             <div class="contact-info-icon">📞</div>
             <h3 class="contact-info-title">전화 상담</h3>
             <p class="contact-info-text">055-647-0557 / 010-5792-0557</p>
-            <p class="contact-info-sub">
-              평일 08:00 - 17:00<br>
-              운영시간 외 문의는 순차적으로 확인 후 연락드리겠습니다.
-            </p>
+            <p class="contact-info-sub">평일 08:00 - 17:00<br>운영시간 외 문의는 순차적으로 확인 후 연락드리겠습니다.</p>
           </div>
-
           <div class="contact-info-card">
             <div class="contact-info-icon">📍</div>
             <h3 class="contact-info-title">오시는 길</h3>
             <p class="contact-info-text">경상남도 통영시 도남로 114-1, 2층</p>
             <p class="contact-info-sub">상담 후 방문 가능</p>
           </div>
-
           <div class="contact-info-card">
             <div class="contact-info-icon">⏰</div>
             <h3 class="contact-info-title">빠른 응대</h3>
@@ -1784,124 +1779,102 @@
   </footer>
 
   <script>
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-
-  document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
-    observer.observe(el);
-  });
-
-  // ===========================
-  // 헤더 스크롤 배경/그림자
-  // ===========================
-  window.addEventListener('scroll', () => {
-    const header = document.querySelector('.header');
-    if (!header) return;
-    if (window.scrollY > 100) {
-      header.style.background = 'rgba(30, 44, 74, 0.98)';
-      header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-    } else {
-      header.style.background = 'rgba(30, 44, 74, 0.95)';
-      header.style.boxShadow = 'none';
-    }
-  });
-
-  // ===========================
-  // 부드러운 앵커 스크롤
-  // ===========================
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-      const href = this.getAttribute('href');
-      if (!href || href === '#') return;
-      const target = document.querySelector(href);
-      if (!target) return;
-
-      e.preventDefault();
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
-    });
-  });
-
-  // ===========================
-  // 프로세스 스텝 클릭 시 설명 강조
-  // ===========================
-  document.querySelectorAll('.step-number').forEach((step, index) => {
-    step.addEventListener('click', function () {
-      document.querySelectorAll('.step-number').forEach(s => s.classList.remove('active'));
-      this.classList.add('active');
-
-      const descriptions = document.querySelectorAll('.step-description');
-      descriptions.forEach((desc, i) => {
-        if (i === index) {
-          desc.style.color = 'var(--kolon-blue)';
-          desc.style.fontWeight = '600';
-        } else {
-          desc.style.color = 'var(--kolon-gray-600)';
-          desc.style.fontWeight = '400';
-        }
-      });
-    });
-  });
-
-  // ===========================
-  // 서비스 카드 hover 애니메이션
-  // ===========================
-  document.querySelectorAll('.service-card').forEach(card => {
-    card.addEventListener('mouseenter', function () {
-      this.style.transform = 'translateY(-8px) scale(1.02)';
-    });
-
-    card.addEventListener('mouseleave', function () {
-      this.style.transform = 'translateY(0) scale(1)';
-    });
-  });
-
-  // ===========================
-  // 연락처 자동 하이픈
-  // ===========================
-  const phoneInput = document.getElementById('phone');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', function (e) {
-      let value = e.target.value.replace(/[^0-9]/g, '');
-
-      if (value.length <= 3) {
-        e.target.value = value;
-      } else if (value.length <= 7) {
-        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
-      } else if (value.length <= 11) {
-        e.target.value =
-          value.slice(0, 3) + '-' +
-          value.slice(3, 7) + '-' +
-          value.slice(7);
-      } else {
-        e.target.value =
-          value.slice(0, 3) + '-' +
-          value.slice(3, 7) + '-' +
-          value.slice(7, 11);
-      }
+function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const result = reader.result;
+        // "data:image/png;base64," 같은 헤더 제거
+        const base64Data = result.split(',')[1];
+        resolve({
+          name: file.name,
+          type: file.type,
+          data: base64Data
+        });
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
     });
   }
 
-  // ===========================
-  // 파일 업로드 리스트 표시 / 개별 삭제
-  // ===========================
+  // 제출 버튼 클릭 시 실행
+  async function handleSubmitWithFiles() {
+    const form = document.getElementById('contactForm');
+    const fileInput = document.getElementById('fileUpload');
+    const fileHidden = document.getElementById('fileData');
+    const submitBtn = form.querySelector('.btn-submit');
+
+    // 1. 유효성 검사 (필수 항목 확인)
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    // 2. 버튼 비활성화 (중복 클릭 방지)
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>파일 처리 중...</span>';
+
+    try {
+      const files = Array.from(fileInput.files);
+      
+      // 3. 파일이 있으면 Base64 변환 후 JSON 문자열로 저장
+      if (files.length > 0) {
+        const fileDataArray = await Promise.all(files.map(file => readFileAsBase64(file)));
+        fileHidden.value = JSON.stringify(fileDataArray);
+      } else {
+        fileHidden.value = "";
+      }
+
+      // 4. 전송 시작 알림
+      submitBtn.innerHTML = '<span>전송 중...</span>';
+      
+      // iframe 로드 감지를 위한 플래그 설정
+      form.dataset.submitted = 'true';
+      
+      // 실제 폼 제출
+      form.submit();
+
+    } catch (error) {
+      console.error("파일 처리 에러:", error);
+      alert("파일 처리 중 오류가 발생했습니다. 다시 시도해주세요.");
+      // 에러 시 버튼 복구
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+    }
+  }
+
+  // iframe이 로드되었을 때 (전송 완료 시) 실행
+  function onIframeLoad() {
+    const form = document.getElementById('contactForm');
+    // 초기 로딩이나 제출하지 않았을 때는 무시
+    if (!form || !form.dataset.submitted) return;
+
+    const submitBtn = form.querySelector('.btn-submit');
+
+    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+
+    // 폼 초기화
+    form.reset();
+    document.getElementById('fileList').innerHTML = '';
+    document.getElementById('fileData').value = '';
+
+    // 버튼 복구
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+    }
+
+    delete form.dataset.submitted;
+  }
+
+  // ==========================================
+  // [UI] 파일 리스트 및 UI 제어 로직
+  // ==========================================
+
   const fileInput = document.getElementById('fileUpload');
   const fileList = document.getElementById('fileList');
-  const contactForm = document.getElementById('contactForm');
 
-  // 파일 리스트 표시/삭제 (기존 코드 그대로)
+  // 파일 선택 시 리스트 보여주기
   if (fileInput && fileList) {
     fileInput.addEventListener('change', function () {
       const files = Array.from(fileInput.files);
@@ -1924,6 +1897,7 @@
       });
     });
 
+    // 개별 파일 삭제
     fileList.addEventListener('click', function (e) {
       if (!e.target.classList.contains('file-item-remove')) return;
       const name = e.target.getAttribute('data-name');
@@ -1936,130 +1910,73 @@
     });
   }
 
-  // 🔹 폼 제출 시 호출 (HTML onsubmit에서 사용)
-  function onFormSubmit() {
-    if (!contactForm) return;
-    const submitBtn = contactForm.querySelector('.btn-submit');
-
-    // iframe onload 가 "진짜 제출 이후"인지 구분용 플래그
-    contactForm.dataset.submitted = 'true';
-
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>전송 중...</span>';
-    }
-  }
-
-  // 🔹 iframe 로딩 완료 시 호출 (HTML onload에서 사용)
-  function onIframeLoad() {
-    if (!contactForm || !contactForm.dataset.submitted) {
-      // 페이지 최초 로딩 시 iframe도 onload가 한 번 뜨기 때문에 필터링
-      return;
-    }
-
-    const submitBtn = contactForm.querySelector('.btn-submit');
-
-    alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-    contactForm.reset();
-    if (fileList) fileList.innerHTML = '';
-
-    if (submitBtn) {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-    }
-
-    // 다음 제출을 위해 플래그 제거
-    delete contactForm.dataset.submitted;
-  }
-
-  // 전역에서 쓸 수 있게 export
-  window.onFormSubmit = onFormSubmit;
-  window.onIframeLoad = onIframeLoad;
-
-  // ===========================
-  // 숫자 카운트업 애니메이션
-  // ===========================
-  function animateNumbers() {
-    const achievementCards = document.querySelectorAll('.achievement-number');
-
-    achievementCards.forEach(card => {
-      const text = card.textContent;
-      const hasPlus = text.includes('+');
-      const hasPercent = text.includes('%');
-      const hasH = text.includes('H');
-
-      let targetNumber;
-      if (hasH) {
-        targetNumber = 24;
+  // 연락처 자동 하이픈
+  const phoneInput = document.getElementById('phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/[^0-9]/g, '');
+      if (value.length <= 3) {
+        e.target.value = value;
+      } else if (value.length <= 7) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3);
+      } else if (value.length <= 11) {
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7);
       } else {
-        targetNumber = parseInt(text.replace(/[^0-9]/g, ''), 10);
-      }
-
-      if (!isNaN(targetNumber)) {
-        let currentNumber = 0;
-        const increment = targetNumber / 50;
-        const timer = setInterval(() => {
-          currentNumber += increment;
-          if (currentNumber >= targetNumber) {
-            currentNumber = targetNumber;
-            clearInterval(timer);
-          }
-
-          let displayText = Math.floor(currentNumber).toString();
-          if (hasPlus) displayText += '+';
-          if (hasPercent) displayText += '%';
-          if (hasH) displayText += 'H';
-
-          card.textContent = displayText;
-        }, 30);
+        e.target.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
       }
     });
   }
 
-  const achievementsSection = document.getElementById('achievements');
-  if (achievementsSection) {
-    const achievementsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          animateNumbers();
-          achievementsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
+  // 애니메이션 (Fade In)
+  const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, observerOptions);
 
-    achievementsObserver.observe(achievementsSection);
-  }
+  document.querySelectorAll('.fade-in').forEach(el => {
+    observer.observe(el);
+  });
 
-  // ===========================
-  // SNS 아이콘 링크 열기 + 살짝 눌리는 효과
-  // ===========================
+  // 헤더 스크롤 효과
+  window.addEventListener('scroll', () => {
+    const header = document.querySelector('.header');
+    if (!header) return;
+    if (window.scrollY > 100) {
+      header.style.background = 'rgba(30, 44, 74, 0.98)';
+      header.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+    } else {
+      header.style.background = 'rgba(30, 44, 74, 0.95)';
+      header.style.boxShadow = 'none';
+    }
+  });
+
+  // 부드러운 스크롤 이동
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // SNS 링크 열기
   function openLink(platform) {
     const links = {
       instagram: 'https://www.instagram.com/dongsung_industrial_developmen/',
       facebook: 'https://www.facebook.com/groups/1885071628746747',
       kakao: 'https://open.kakao.com/o/sB9Dav2h'
     };
-
     const url = links[platform];
-    if (!url) return;
-
-    window.open(url, '_blank');
-
-    const evt = window.event;
-    if (evt && evt.currentTarget) {
-      const icon = evt.currentTarget;
-      icon.style.transform = 'scale(0.95)';
-      setTimeout(() => {
-        icon.style.transform = '';
-      }, 150);
-    }
+    if (url) window.open(url, '_blank');
   }
-  window.openLink = openLink;
 
-  // ===========================
   // 퀵 아이콘 등장 애니메이션
-  // ===========================
   document.addEventListener('DOMContentLoaded', () => {
     const icons = document.querySelectorAll('.icon-wrapper');
     icons.forEach((icon, index) => {
@@ -2072,6 +1989,11 @@
       }, 100 * (index + 1));
     });
   });
+
+  // 전역 함수 노출 (HTML에서 호출 가능하도록)
+  window.onIframeLoad = onIframeLoad;
+  window.handleSubmitWithFiles = handleSubmitWithFiles;
+  window.openLink = openLink;
   </script>
 </body>
 </html>
