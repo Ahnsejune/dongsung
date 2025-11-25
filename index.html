@@ -1927,50 +1927,89 @@
     });
 
     // 폼 제출 처리
-    const contactForm = document.getElementById('contactForm');
+let selectedFiles = [];
+const fileInput = document.getElementById('fileUpload');
+const fileList = document.getElementById('fileList');
+const contactForm = document.getElementById('contactForm');
 
-    contactForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
+if (fileInput) {
+  fileInput.addEventListener('change', function () {
+    const files = Array.from(fileInput.files).slice(0, 5);
+    selectedFiles = [];
+    if (!files.length) {
+      fileList.innerHTML = '';
+      return;
+    }
 
-      const formData = {
-        name: document.getElementById('name').value,
-        phone: document.getElementById('phone').value,
-        storeName: document.getElementById('storeName').value,
-        location: document.getElementById('location').value,
-        situation: document.getElementById('situation').value,
-        paymentMethod: document.getElementById('paymentMethod').value,
-        deadline: document.getElementById('deadline').value,
-        memo: document.getElementById('memo').value,
-        files: selectedFiles      // ★ 첨부파일 전체 정보 전송
-      };
+    let pending = files.length;
 
-      const submitBtn = contactForm.querySelector('.btn-submit');
-      submitBtn.disabled = true;
-      submitBtn.innerHTML = '<span>전송 중...</span>';
-
-      try {
-        await fetch('https://script.google.com/macros/s/AKfycby2IBwPbab0YtEz0JgS9cSM7U4ABS3CidGevBVSnf-x6YhYO_OE0eq-cpaJRnOQha2b/exec', {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+    files.forEach(function (file) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        selectedFiles.push({
+          name: file.name,
+          type: file.type,
+          data: e.target.result
         });
 
-        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-        contactForm.reset();
-        selectedFiles = [];
-        fileList.innerHTML = '';
-      } catch (error) {
-        console.error(error);
-        alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-      }
+        pending--;
+        if (pending === 0) {
+          fileList.innerHTML = selectedFiles
+            .map(function (f) {
+              return '<div class="file-item">' + f.name + '</div>';
+            })
+            .join('');
+        }
+      };
+      reader.readAsDataURL(file);
     });
+  });
+}
+
+if (contactForm) {
+  contactForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const formData = {
+      name: document.getElementById('name').value,
+      phone: document.getElementById('phone').value,
+      storeName: document.getElementById('storeName').value,
+      location: document.getElementById('location').value,
+      situation: document.getElementById('situation').value,
+      paymentMethod: document.getElementById('paymentMethod').value,
+      deadline: document.getElementById('deadline').value,
+      memo: document.getElementById('memo').value,
+      files: selectedFiles
+    };
+
+    const submitBtn = contactForm.querySelector('.btn-submit');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>전송 중...</span>';
+
+    try {
+      await fetch('여기에_웹앱_URL_붙이기', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+
+      contactForm.reset();
+      selectedFiles = [];
+      if (fileList) fileList.innerHTML = '';
+    } catch (error) {
+      console.error(error);
+      alert('전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+    }
+  });
+}
 
 
     // 성과 카드 숫자 애니메이션
