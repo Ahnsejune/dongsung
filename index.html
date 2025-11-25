@@ -1597,7 +1597,16 @@
       </div>
 
       <div class="contact-form-container fade-in">
-        <form id="contactForm" class="contact-form" enctype="multipart/form-data">
+        <form
+        id="contactForm"
+        class="contact-form"
+        enctype="multipart/form-data"
+        method="POST"
+        action="https://script.google.com/macros/s/AKfycbxCuj1BbMnaSZR9IyHFFeH4DOyv4VTacfFgIY3So3gcplEDuInuxHXqNTRT-bYAGC31/exec"
+        target="hidden_iframe"
+        onsubmit="onFormSubmit()"
+        >
+          <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="onIframeLoad()"></iframe>
           <div class="form-row">
             <div class="form-group">
               <label for="name" class="form-label">이름 <span class="required">*</span></label>
@@ -1901,41 +1910,38 @@
     });
   }
 
-  if (contactForm) {
-    contactForm.addEventListener('submit', async function (e) {
-      e.preventDefault();
+function onFormSubmit() {
+  const form = document.getElementById('contactForm');
+  const submitBtn = form.querySelector('.btn-submit');
 
-      const submitBtn = contactForm.querySelector('.btn-submit');
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = '<span>전송 중...</span>';
-      }
+  form.dataset.submitted = 'true';
 
-      try {
-        const WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxCuj1BbMnaSZR9IyHFFeH4DOyv4VTacfFgIY3So3gcplEDuInuxHXqNTRT-bYAGC31/exec';
-        const formDataToSend = new FormData(contactForm);
-
-        await fetch(WEBAPP_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formDataToSend
-        });
-
-        alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
-
-        contactForm.reset();
-        if (fileList) fileList.innerHTML = '';
-      } catch (error) {
-        console.error('FETCH ERROR:', error);
-        alert('전송 중 오류가 발생했습니다.\n\n' + (error && error.message ? error.message : error));
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
-        }
-      }
-    });
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<span>전송 중...</span>';
   }
+}
+
+function onIframeLoad() {
+  const form = document.getElementById('contactForm');
+  // 페이지 처음 로딩될 때 iframe onload도 한 번 호출되니까, 그건 무시
+  if (!form || !form.dataset.submitted) return;
+
+  const submitBtn = form.querySelector('.btn-submit');
+
+  alert('상담 신청이 완료되었습니다!\n24시간 내에 담당자가 연락드리겠습니다.');
+
+  form.reset();
+  if (fileList) fileList.innerHTML = '';
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<span>무료 상담 신청하기</span><span>→</span>';
+  }
+
+  // 다음 전송을 위해 플래그 초기화
+  delete form.dataset.submitted;
+}
 
   function animateNumbers() {
     const achievementCards = document.querySelectorAll('.achievement-number');
