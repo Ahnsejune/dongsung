@@ -1935,7 +1935,7 @@ function readFileAsBase64(file) {
     });
   }, observerOptions);
 
-  document.querySelectorAll('.fade-in').forEach(el => {
+  document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
     observer.observe(el);
   });
 
