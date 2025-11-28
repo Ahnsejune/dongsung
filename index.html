@@ -181,72 +181,266 @@
 
     /* 히어로 섹션 - 코오롱 스타일 풀-와이드 */
     .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      background: var(--kolon-navy);
-      position: relative;
-      overflow: hidden;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        background: var(--kolon-navy); /* 기본 배경색 (이미지 로드 전) */
+        position: relative;
+        overflow: hidden;
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('main_banner_03.jpg');
-      background-attachment: fixed;
-      background-size: cover;
-      background-blend-mode: color;
-      background-color: rgba(0, 0, 0, 0.6);
+    /* --- 배경 슬라이드쇼 영역 시작 --- */
+    .hero-bg-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
     }
+
+    .hero-bg-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0; /* 기본적으로 숨김 */
+        /* 총 시간 25초 (이미지 5장 * 5초)
+           infinite: 무한 반복
+        */
+        animation: crossFade 25s infinite;
+    }
+
+    /* 각 이미지 설정 (예시 URL 사용, 실제 이미지 경로로 변경 필요) */
+    .slide-1 {
+        background-image: url('main_banner_03.jpg');
+        animation-delay: 0s;
+    }
+    .slide-2 {
+        background-image: url('main_banner_04.jpg');
+        animation-delay: 5s;
+    }
+    .slide-3 {
+        background-image: url('main_banner_05.jpg');
+        animation-delay: 10s;
+    }
+    .slide-4 {
+        background-image: url('main_banner_06.jpg');
+        animation-delay: 15s;
+    }
+    .slide-5 {
+        background-image: url('main_banner_07.jpg');
+        animation-delay: 20s;
+    }
+
+    /* 어두운 오버레이 (텍스트 가독성 확보용) */
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.6); /* 검정색 투명도 60% */
+        z-index: 1;
+    }
+
+    /* 페이드 애니메이션 키프레임 */
+    @keyframes crossFade {
+        0% { opacity: 0; transform: scale(1); }
+        4% { opacity: 1; }  /* 1초 동안 페이드 인 */
+        20% { opacity: 1; transform: scale(1.05); } /* 4초간 유지 + 살짝 줌인 효과 */
+        24% { opacity: 0; } /* 1초 동안 페이드 아웃 */
+        100% { opacity: 0; }
+    }
+    /* --- 배경 슬라이드쇼 영역 끝 --- */
+
 
     .hero-container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 2rem;
-      display: grid;
-      grid-template-columns: 3fr 2fr;
-      gap: 6rem;
-      align-items: center;
-      position: relative;
-      z-index: 2;
+        max-width: var(--max-width);
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 2rem;
+        display: grid;
+        grid-template-columns: 3fr 2fr; /* 텍스트 3 : 카드 2 비율 */
+        gap: 4rem;
+        align-items: center;
+        position: relative;
+        z-index: 2; /* 배경보다 위에 위치 */
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 968px) {
+        .hero-container {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .hero-buttons {
+            justify-content: center;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     .hero-content {
-      color: white;
+        color: white;
     }
 
     .hero-kicker {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--kolon-gray-200);
-      margin-bottom: 1rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--kolon-gray-200);
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        display: inline-block;
+        background: rgba(255,255,255,0.1);
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        backdrop-filter: blur(4px);
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-      color: white;
+        font-size: clamp(2.5rem, 5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .hero-description {
-      font-size: 1.125rem;
-      color: rgba(255, 255, 255, 0.8);
-      margin-bottom: 2rem;
-      line-height: 1.7;
+        font-size: 1.125rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 2.5rem;
+        line-height: 1.7;
+        word-break: keep-all;
     }
 
     .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: var(--primary-color);
+        color: white;
+    }
+    .btn-primary:hover {
+        background-color: #0052cc;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+        backdrop-filter: blur(4px);
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+    .btn-secondary:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
+    /* Floating Card Design */
+    .hero-visual {
+        perspective: 1000px;
+    }
+
+    .floating-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 2.5rem;
+        border-radius: 1.5rem;
+        color: white;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-20px); }
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #fff;
+        border-bottom: 2px solid var(--kolon-blue);
+        display: inline-block;
+        padding-bottom: 0.5rem;
+    }
+
+    .card-description {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+        color: rgba(255,255,255,0.8);
+        word-break: keep-all;
+    }
+
+    .card-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .stat {
+        background: rgba(0,0,0,0.2);
+        padding: 0.75rem 0.5rem;
+        border-radius: 0.75rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: var(--primary-color);
+        margin-bottom: 0.25rem;
+    }
+    .stat-value.white { color: white; }
+
+    .stat-label {
+        font-size: 0.75rem;
+        color: rgba(255,255,255,0.7);
+    }
+
+    /* Entry Animations */
+    .slide-in-left {
+        animation: slideLeft 1s ease-out forwards;
+    }
+    .slide-in-right {
+        animation: slideRight 1s ease-out forwards;
+    }
+
+    @keyframes slideLeft {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideRight {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
     }
 
     .btn {
@@ -304,42 +498,10 @@
       position: relative;
     }
 
-    .floating-card {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: var(--border-radius-lg);
-      padding: 2.5rem;
-      color: var(--kolon-navy);
-      box-shadow: var(--shadow-2xl);
-      animation: float 6s ease-in-out infinite;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-    }
 
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
-    }
-
-    .card-title {
-      font-size: 1.75rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--kolon-navy);
-    }
-
-    .card-description {
-      font-size: 1.1rem;
-      color: var(--kolon-gray-600);
-      margin-bottom: 1rem;
-    }
-
-    .card-stats {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--kolon-gray-200);
-      gap: 20px;
     }
 
     .stat {
@@ -1042,13 +1204,13 @@
         gap: 16px;
         z-index: 1000;
     }
-    
+
     .quick-icons-container .icon-wrapper {
         position: relative;
         width: 60px;
         height: 60px;
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon {
         width: 60px;
         height: 60px;
@@ -1064,7 +1226,7 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon::before {
         content: '';
         position: absolute;
@@ -1076,35 +1238,35 @@
         opacity: 0;
         transition: opacity 0.3s ease;
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon:hover::before {
         opacity: 1;
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon:hover {
         transform: translateY(-5px) scale(1.1);
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon:active {
         transform: translateY(-3px) scale(1.05);
     }
-    
+
     /* 인스타그램 */
     .quick-icons-container .icon-wrapper .social-icon.instagram {
         background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
     }
-    
+
     /* 페이스북 */
     .quick-icons-container .icon-wrapper .social-icon.facebook {
         background: linear-gradient(135deg, #1877f2, #0d5dbf);
     }
-    
+
     /* 카카오톡 */
     .quick-icons-container .icon-wrapper .social-icon.kakao {
         background: linear-gradient(135deg, #fee500, #ffd700);
     }
-    
+
     /* 아이콘 SVG */
     .quick-icons-container .icon-wrapper .social-icon svg {
         width: 28px;
@@ -1114,15 +1276,15 @@
         z-index: 1;
         transition: transform 0.3s ease;
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon.kakao svg {
         fill: #3c1e1e;
     }
-    
+
     .quick-icons-container .icon-wrapper .social-icon:hover svg {
         transform: scale(1.15) rotate(5deg);
     }
-    
+
     /* 툴팁 */
     .quick-icons-container .icon-wrapper .tooltip {
         position: absolute;
@@ -1140,7 +1302,7 @@
         transition: all 0.3s ease;
         backdrop-filter: blur(10px);
     }
-    
+
     .quick-icons-container .icon-wrapper .tooltip::after {
         content: '';
         position: absolute;
@@ -1153,12 +1315,12 @@
         border-top: 6px solid transparent;
         border-bottom: 6px solid transparent;
     }
-    
+
     .quick-icons-container .icon-wrapper:hover .tooltip {
         opacity: 1;
         transform: translateY(-50%) translateX(0);
     }
-    
+
     /* 펄스 애니메이션 */
     .quick-icons-container .icon-wrapper .pulse {
         position: absolute;
@@ -1168,7 +1330,7 @@
         animation: pulse 2s ease-out infinite;
         pointer-events: none;
     }
-    
+
     @keyframes pulse {
         0% {
             box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
@@ -1227,7 +1389,7 @@
       .achievement-number {
         font-size: 2.75rem;
       }
-      
+
       .hero-title {
         font-size: 2.5rem;
       }
@@ -1260,23 +1422,23 @@
           top: 50%;
           transform: translate(0, -50%);
       }
-  
+
       .quick-icons-container .icon-wrapper {
           width: 50px;
           height: 50px;
       }
-  
+
       .quick-icons-container .icon-wrapper .social-icon {
           width: 50px;
           height: 50px;
           border-radius: 15px;
       }
-  
+
       .quick-icons-container .icon-wrapper .social-icon svg {
           width: 24px;
           height: 24px;
       }
-  
+
       .quick-icons-container .icon-wrapper .tooltip {
           font-size: 12px;
           padding: 6px 12px;
@@ -1351,6 +1513,22 @@
 
   <!-- 히어로 섹션 -->
   <section class="hero">
+    <!-- 배경 슬라이드쇼 컨테이너 -->
+    <div class="hero-bg-slider">
+        <!--
+          실제 사용시 각 background-image의 url(...) 부분을
+          준비하신 main_banner_01.jpg ~ 05.jpg 경로로 수정해주세요.
+        -->
+        <div class="hero-bg-slide slide-1"></div>
+        <div class="hero-bg-slide slide-2"></div>
+        <div class="hero-bg-slide slide-3"></div>
+        <div class="hero-bg-slide slide-4"></div>
+        <div class="hero-bg-slide slide-5"></div>
+    </div>
+
+    <!-- 배경 어둡게 하는 오버레이 (텍스트 잘 보이게 함) -->
+    <div class="hero-overlay"></div>
+
     <div class="hero-container">
       <div class="hero-content slide-in-left">
         <div class="hero-kicker">전문 폐업·철거 서비스</div>
@@ -1372,6 +1550,7 @@
           </a>
         </div>
       </div>
+
       <div class="hero-visual slide-in-right">
         <div class="floating-card">
           <div class="card-title">ONE-STOP 서비스</div>
@@ -1381,15 +1560,15 @@
           </div>
           <div class="card-stats">
             <div class="stat">
-              <div class="stat-value">7</div>
+              <div class="stat-value white">7</div>
               <div class="stat-label">단계 프로세스</div>
             </div>
             <div class="stat">
-              <div class="stat-value">24H</div>
+              <div class="stat-value white">24H</div>
               <div class="stat-label">빠른 상담</div>
             </div>
             <div class="stat">
-              <div class="stat-value">A-Z</div>
+              <div class="stat-value white">A-Z</div>
               <div class="stat-label">원스톱 해결</div>
             </div>
           </div>
@@ -1607,7 +1786,7 @@
           target="hidden_iframe"
         >
           <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="onIframeLoad()"></iframe>
-          
+
           <input type="hidden" id="fileData" name="fileData">
 
           <div class="form-row">
@@ -1818,7 +1997,7 @@ function readFileAsBase64(file) {
 
     try {
       const files = Array.from(fileInput.files);
-      
+
       // 3. 파일이 있으면 Base64 변환 후 JSON 문자열로 저장
       if (files.length > 0) {
         const fileDataArray = await Promise.all(files.map(file => readFileAsBase64(file)));
@@ -1829,10 +2008,10 @@ function readFileAsBase64(file) {
 
       // 4. 전송 시작 알림
       submitBtn.innerHTML = '<span>전송 중...</span>';
-      
+
       // iframe 로드 감지를 위한 플래그 설정
       form.dataset.submitted = 'true';
-      
+
       // 실제 폼 제출
       form.submit();
 
