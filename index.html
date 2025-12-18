@@ -1499,6 +1499,164 @@
       50% { opacity: 1; }
       100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
     }
+
+    /* 모달 오버레이 */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* 모달 숨김 처리는 JS로 제어하거나 display: none 사용 */
+}
+
+/* 모달 숨김 클래스 */
+.modal-overlay.hidden {
+    display: none;
+}
+
+/* 모달 콘텐츠 박스 */
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    width: 100%;
+    max-width: 42rem; /* max-w-2xl */
+    border-radius: 1rem; /* rounded-2xl */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+/* 슬라이더 래퍼 (비율 유지) */
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9; /* aspect-video */
+    background-color: #e5e7eb;
+    overflow: hidden;
+}
+
+/* 슬라이드 컨테이너 (움직이는 부분) */
+.popup-slide-container {
+    display: flex;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+/* 개별 슬라이드 */
+.popup-slide {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 슬라이드 텍스트 캡션 (그라디언트 포함) */
+.slide-caption {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    display: flex;
+    align-items: flex-end;
+    padding: 2rem;
+}
+
+.slide-caption .text-content {
+    color: #fff;
+}
+
+.slide-caption h3 {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
+}
+
+.slide-caption p {
+    font-size: 0.875rem; /* text-sm */
+    opacity: 0.9;
+    margin: 0;
+}
+
+/* 네비게이션 버튼 */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 9999px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+.nav-btn.prev { left: 1rem; }
+.nav-btn.next { right: 1rem; }
+
+.nav-btn i {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+/* 인디케이터 (점) */
+.indicators {
+    position: absolute;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dot.active {
+    background-color: #fff;
+    transform: scale(1.2);
+}
+
+/* 하단 닫기 버튼 */
+.close-bar-btn {
+    width: 100%;
+    background-color: #1e2c4a;
+    color: #fff;
+    padding: 1rem;
+    font-weight: 700;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.close-bar-btn:hover {
+    background-color: #000;
+}
   </style>
 </head>
 <body>
@@ -1964,6 +2122,87 @@
     </div>
   </footer>
 
+
+    <div id="modalOverlay" class="modal-overlay">
+        <div class="modal-content">
+
+            <div class="slider-wrapper">
+                <div id="slideContainer" class="popup-slide-container">
+
+                    <div class="popup-slide">
+                        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80" alt="철거 현장" class="slide-img">
+                        <div class="slide-caption">
+                            <div class="text-content">
+                                <h3>동성산업개발 전문 철거</h3>
+                                <p>안전하고 신속한 철거, 새로운 시작의 첫걸음입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-slide">
+                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" alt="원상복구" class="slide-img">
+                        <div class="slide-caption">
+                            <div class="text-content">
+                                <h3>완벽한 원상복구 솔루션</h3>
+                                <p>임대인과의 분쟁 없는 깔끔한 마무리를 약속합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-slide">
+                        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&q=80" alt="희망리턴패키지" class="slide-img">
+                        <div class="slide-caption">
+                            <div class="text-content">
+                                <h3>희망리턴패키지 전문 지원</h3>
+                                <p>최대 250만원 철거비 지원, 서류 대행까지 한 번에!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-slide">
+                        <img src="https://images.unsplash.com/photo-1503387762-592dee58c160?auto=format&fit=crop&w=1200&q=80" alt="건축" class="slide-img">
+                        <div class="slide-caption">
+                            <div class="text-content">
+                                <h3>20년 신뢰의 노하우</h3>
+                                <p>통영·경남 지역 수많은 프로젝트가 증명합니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-slide">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2959210?auto=format&fit=crop&w=1200&q=80" alt="상담" class="slide-img">
+                        <div class="slide-caption">
+                            <div class="text-content">
+                                <h3>지금 바로 무료상담 받으세요</h3>
+                                <p>전화 또는 폼 작성을 통해 신속하게 도와드립니다.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <button id="prevBtn" class="nav-btn prev">
+                    <i data-lucide="chevron-left"></i>
+                </button>
+                <button id="nextBtn" class="nav-btn next">
+                    <i data-lucide="chevron-right"></i>
+                </button>
+
+                <div class="indicators">
+                    <div class="dot active" data-index="0"></div>
+                    <div class="dot" data-index="1"></div>
+                    <div class="dot" data-index="2"></div>
+                    <div class="dot" data-index="3"></div>
+                    <div class="dot" data-index="4"></div>
+                </div>
+            </div>
+
+            <button id="closePopup" class="close-bar-btn">
+                창 닫기 <i data-lucide="x"></i>
+            </button>
+        </div>
+    </div>
+
   <script>
 function readFileAsBase64(file) {
     return new Promise((resolve, reject) => {
@@ -2180,9 +2419,100 @@ function readFileAsBase64(file) {
   window.onIframeLoad = onIframeLoad;
   window.handleSubmitWithFiles = handleSubmitWithFiles;
   window.openLink = openLink;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.getElementById('slideContainer');
+    const slides = document.querySelectorAll('.popup-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dots = document.querySelectorAll('.dot');
+    const closeBtn = document.getElementById('closePopup');
+    const modal = document.getElementById('modalOverlay');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoSlideInterval;
+
+    // 슬라이드 이동 함수
+    function updateSlider() {
+        // 슬라이드 컨테이너 이동
+        slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        // 인디케이터(점) 업데이트
+        dots.forEach((dot, index) => {
+            if (index === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    // 다음 슬라이드
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        updateSlider();
+    }
+
+    // 이전 슬라이드
+    function prevSlide() {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        updateSlider();
+    }
+
+    // 자동 재생 시작
+    function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, 3000); // 3초마다 이동
+    }
+
+    // 자동 재생 정지 (마우스 올렸을 때 등 필요 시 사용)
+    function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+    }
+
+    // 이벤트 리스너 등록
+    nextBtn.addEventListener('click', () => {
+        stopAutoSlide(); // 버튼 클릭 시 자동재생 잠시 멈춤
+        nextSlide();
+        startAutoSlide();
+    });
+
+    prevBtn.addEventListener('click', () => {
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+    });
+
+    // 인디케이터 클릭 이벤트
+    dots.forEach(dot => {
+        dot.addEventListener('click', (e) => {
+            stopAutoSlide();
+            const index = parseInt(e.target.getAttribute('data-index'));
+            currentIndex = index;
+            updateSlider();
+            startAutoSlide();
+        });
+    });
+
+    // 팝업 닫기
+    closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        stopAutoSlide(); // 닫으면 자동재생 정지
+    });
+
+    // 모달 배경 클릭 시 닫기 (선택사항)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.classList.add('hidden');
+            stopAutoSlide();
+        }
+    });
+
+    // 초기 실행
+    updateSlider();
+    startAutoSlide();
+});
+
   </script>
 </body>
 </html>
-
-
-
