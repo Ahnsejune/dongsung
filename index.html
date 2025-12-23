@@ -1655,6 +1655,179 @@
 .close-bar-btn:hover {
     background-color: #000;
 }
+/* --- [수정됨] 양옆 버튼형 포트폴리오 스타일 --- */
+.portfolio {
+      padding: 8rem 0;
+      background: #f1f5f9;
+    }
+
+    /* 상단 헤더 (버튼 제거됨) */
+    .portfolio-header-center {
+      text-align: center;
+      margin-bottom: 3.5rem; /* 간격 넓힘 */
+      position: relative;
+      padding: 0 1rem;
+    }
+
+    .pf-title-display {
+      font-size: clamp(1.75rem, 5vw, 2.5rem); /* 반응형 폰트 크기 확대 */
+      font-weight: 800; /* 더 두껍게 */
+      color: var(--kolon-navy);
+      line-height: 1.3;
+      margin-bottom: 1.5rem;
+      word-break: keep-all; /* 단어 단위 줄바꿈 */
+      letter-spacing: -0.02em; /* 자간 좁혀서 단단한 느낌 */
+    }
+
+    .pf-counter {
+      display: inline-block;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--kolon-blue);
+      background-color: rgba(0, 102, 204, 0.08); /* 연한 파란 배경 */
+      padding: 0.4rem 1.2rem;
+      border-radius: 99px;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* 네비게이션 버튼 (양옆 배치) */
+    .pf-nav-btn {
+      position: absolute;
+      top: 0;
+      margin-top: -50px;
+      transform: translateY(-50%); /* 수직 중앙 정렬 */
+      z-index: 10;
+      background: white;
+      border: 1px solid var(--kolon-gray-200);
+      width: 3.5rem; /* 버튼 크기 키움 */
+      height: 3.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--kolon-navy);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: all var(--transition-fast);
+    }
+
+    /* 왼쪽/오른쪽 위치 지정 */
+    .pf-nav-btn.prev { left: 0; }
+    .pf-nav-btn.next { right: 0; }
+
+    .pf-nav-btn:hover {
+      background: var(--kolon-navy);
+      color: white;
+      border-color: var(--kolon-navy);
+      transform: translateY(-50%) scale(1.1); /* 호버 시 살짝 커짐 */
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    /* 이미지 그리드 */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      opacity: 1;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    .project-grid.fade-out {
+      opacity: 0.2;
+    }
+
+    .photo-card {
+      background: var(--kolon-gray-50);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--kolon-gray-200);
+    }
+
+    .img-wrapper {
+      width: 100%;
+      height: 250px;
+      overflow: hidden;
+      background-color: #eee;
+    }
+
+    .img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-label {
+      background: var(--kolon-navy);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .photo-card.ing .photo-label {
+      background: var(--kolon-blue);
+    }
+/* 제목 아래 장식 선 */
+.pf-title-deco {
+      width: 60px;
+      height: 4px;
+      background: var(--kolon-blue);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* 슬라이더 래퍼 여백 조정 */
+    .pf_slider-wrapper {
+      position: relative;
+    }
+    
+    /* 모바일 반응형 추가 조정 */
+    @media (max-width: 768px) {
+      .pf_slider-wrapper {
+        padding: 0;
+      }
+      .portfolio-header-center {
+        margin-bottom: 2.5rem;
+      }
+    }
+    /* 반응형 처리 */
+    @media (max-width: 768px) {
+      .slider-wrapper {
+        padding: 0; /* 모바일에서는 여백 제거 */
+      }
+      
+      .project-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      /* 모바일에서 버튼은 하단 중앙으로 이동 (화면 가리지 않게) */
+      .pf-nav-btn {
+        position: static; /* 절대 위치 해제 */
+        transform: none;
+        display: inline-flex;
+        margin: 0 10px;
+      }
+
+      .mobile-nav-container {
+        display: flex;
+        justify-content: center; /* 오른쪽 정렬 (취향에 따라 center로 변경 가능) */
+        gap: 10px;                 /* 버튼 사이 간격 */
+        margin-top: 0;             /* 위쪽 여백 제거 */
+        margin-bottom: 1rem;       /* 아래쪽(이미지와 사이) 여백 추가 */
+        padding-right: 10px;
+      }
+      
+      /* 데스크탑에서는 숨김 */
+      .mobile-hide { display: none; }
+    }
+
+    @media (min-width: 769px) {
+      .desktop-hide { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -1664,6 +1837,7 @@
       <a href="#" class="logo"><img src="logo_01.png"></a>
       <nav class="nav">
         <a href="#about" class="nav-link">회사소개</a>
+        <a href="#portfolio" class="nav-link">주요실적</a>
         <a href="#services" class="nav-link">서비스</a>
         <a href="#process" class="nav-link">프로세스</a>
         <a href="#contact" class="nav-link">문의하기</a>
@@ -1788,7 +1962,60 @@
       </div>
     </div>
   </section>
+  <section id="portfolio" class="portfolio">
+    <div class="container">
 
+      <div class="portfolio-header-center fade-in">
+        <div id="pfCounter" class="pf-counter">1 / 3</div>
+        <div id="pfTitle" class="pf-title-display">프로젝트 로딩 중...</div>
+        <div class="pf-title-deco"></div>
+      </div>
+
+      <div class="pf_slider-wrapper fade-in">
+        
+        <button id="btnPrevPf" class="pf-nav-btn prev mobile-hide">
+            <i data-lucide="chevron-left"></i>
+        </button>
+
+        <div class="mobile-nav-container desktop-hide fade-in">
+            <button id="btnPrevPfMobile" class="pf-nav-btn">
+                <i data-lucide="chevron-left"></i>
+            </button>
+            <button id="btnNextPfMobile" class="pf-nav-btn">
+                <i data-lucide="chevron-right"></i>
+            </button>
+        </div>
+
+        <div id="pfGrid" class="project-grid">
+          <div class="photo-card">
+            <div class="img-wrapper">
+              <img id="imgBefore" src="" alt="준공 전">
+            </div>
+            <div class="photo-label">준공 전</div>
+          </div>
+
+          <div class="photo-card ing">
+            <div class="img-wrapper">
+              <img id="imgIng" src="" alt="준공 중">
+            </div>
+            <div class="photo-label">준공 중</div>
+          </div>
+
+          <div class="photo-card">
+            <div class="img-wrapper">
+              <img id="imgAfter" src="" alt="준공 후">
+            </div>
+            <div class="photo-label">준공 후</div>
+          </div>
+        </div>
+
+        <button id="btnNextPf" class="pf-nav-btn next mobile-hide">
+            <i data-lucide="chevron-right"></i>
+        </button>
+
+      </div>
+      </div>
+  </section>
   <!-- 성과/신뢰 섹션 -->
   <section id="achievements" class="achievements">
     <div class="container">
@@ -2521,11 +2748,120 @@ function readFileAsBase64(file) {
     updateSlider();
     startAutoSlide();
 });
+// ==========================================
+  // [포트폴리오] 데이터 및 슬라이더 로직
+  // ==========================================
+  
+  const portfolioData = [
+  {
+    title: "모델하우스 가설건축물 철거공사",
+    before: "/images/project_01_before.jpg",
+    ing: "/images/project_01_ing.jpg",
+    after: "/images/project_01_after.jpg"
+  },
+  {
+    title: "울산 중산동 91-2번지 등 2필지 철거공사",
+    before: "/images/project_02_before.jpg",
+    ing: "/images/project_02_ing.jpg",
+    after: "/images/project_02_after.jpg"
+  },
+  {
+    title: "주식회사 대화냉장 냉동창고 철거공사",
+    before: "/images/project_03_before.jpg",
+    ing: "/images/project_03_ing.jpg",
+    after: "/images/project_03_after.jpg"
+  },
+  {
+    title: "중앙(충무교회~충무도서)도시계획도로",
+    before: "/images/project_04_before.jpg",
+    ing: "/images/project_04_ing.jpg",
+    after: "/images/project_04_after.jpg"
+  },
+  {
+    title: "통영시 공설봉안당 휴게실 리모델링 석면 철거 공사",
+    before: "/images/project_05_before.jpg",
+    ing: "/images/project_05_ing.jpg",
+    after: "/images/project_05_after.jpg"
+  },
+  {
+    title: "항남동 151-96번지 선지국전문 식당 철거공사",
+    before: "/images/project_06_before.jpg",
+    ing: "/images/project_06_ing.jpg",
+    after: "/images/project_06_after.jpg"
+  },
+  {
+    title: "행정안전부 빈집정비사업(동촌, 덕동) 철거공사",
+    before: "/images/project_07_before.jpg",
+    ing: "/images/project_07_ing.jpg",
+    after: "/images/project_07_after.jpg"
+  },
+  {
+    title: "힐스테이트 통영 현장식당 가설건축물 철거공사",
+    before: "/images/project_08_before.jpg",
+    ing: "/images/project_08_ing.jpg",
+    after: "/images/project_08_after.jpg"
+  }
+  ];
 
+  let currentPfIndex = 0;
+
+  // DOM 요소
+  const pfTitle = document.getElementById('pfTitle');
+  const pfCounter = document.getElementById('pfCounter');
+  const pfGrid = document.getElementById('pfGrid');
+  const imgBefore = document.getElementById('imgBefore');
+  const imgIng = document.getElementById('imgIng');
+  const imgAfter = document.getElementById('imgAfter');
+
+  // 데스크탑 버튼
+  const btnPrevPf = document.getElementById('btnPrevPf');
+  const btnNextPf = document.getElementById('btnNextPf');
+  // 모바일 버튼
+  const btnPrevPfMobile = document.getElementById('btnPrevPfMobile');
+  const btnNextPfMobile = document.getElementById('btnNextPfMobile');
+
+  function updatePortfolio(index) {
+    pfGrid.classList.add('fade-out');
+    
+    setTimeout(() => {
+      const data = portfolioData[index];
+      pfTitle.innerText = data.title;
+      pfCounter.innerText = `${index + 1} / ${portfolioData.length}`;
+      
+      imgBefore.src = data.before;
+      imgIng.src = data.ing;
+      imgAfter.src = data.after;
+
+      pfGrid.classList.remove('fade-out');
+    }, 200);
+  }
+
+  function prevSlide() {
+    currentPfIndex--;
+    if (currentPfIndex < 0) currentPfIndex = portfolioData.length - 1;
+    updatePortfolio(currentPfIndex);
+  }
+
+  function nextSlide() {
+    currentPfIndex++;
+    if (currentPfIndex >= portfolioData.length) currentPfIndex = 0;
+    updatePortfolio(currentPfIndex);
+  }
+
+  // 이벤트 리스너 통합 (데스크탑 & 모바일)
+  if(btnPrevPf) btnPrevPf.addEventListener('click', prevSlide);
+  if(btnNextPf) btnNextPf.addEventListener('click', nextSlide);
+  if(btnPrevPfMobile) btnPrevPfMobile.addEventListener('click', prevSlide);
+  if(btnNextPfMobile) btnNextPfMobile.addEventListener('click', nextSlide);
+
+  // 초기화
+  document.addEventListener('DOMContentLoaded', () => {
+    if (portfolioData.length > 0) updatePortfolio(0);
+    if(window.lucide) lucide.createIcons();
+  });
   </script>
 </body>
 </html>
-
 
 
 
